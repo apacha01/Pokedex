@@ -46,8 +46,11 @@ searchBtn.addEventListener('click', () => {
 
 async function getPokemonData(pokeName) {
 	let pokemon = await fetch(url(pokeName)).then((res) => res.json());
-	let processedPoke = processData(pokemon);
-	console.log(processedPoke);
+	let processedData = processData(pokemon);
+	let processedStats = processStats(pokemon);
+	let processedEvo = processEvo(pokemon);
+	
+	console.log(processedData);
 }
 
 function processData(pokemonObject) {
@@ -70,8 +73,10 @@ function processTypes(types){
 	return processedTypes;
 }
 
-function processSpecies(species){
-	console.log(species);
+async function processSpecies(species){
+	let sp = await fetch(species.url).then((res) => res.json());
+	let s = sp.genera.find((s) => s.language.name === 'en');
+	return s.genus;
 }
 
 function processAbilities(abilities){
@@ -82,8 +87,13 @@ function processIndeces(indices){
 	console.log(indices);
 }
 
+function processStats(pokemonObject){
 
+}
 
+function processEvo(pokemonObject){
+
+}
 
 
 
