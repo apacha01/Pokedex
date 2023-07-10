@@ -88,7 +88,12 @@ function processAbilities(abilities){
 }
 
 function processIndeces(indices){
-	console.log(indices);
+	let ixs = new Map();
+	indices.forEach((index) => {
+		if (ixs.has(index.game_index))	ixs.get(index.game_index).push(index.version.name);
+		else ixs.set(index.game_index, [index.version.name]);
+	});
+	return ixs;
 }
 
 function processStats(pokemonObject){
