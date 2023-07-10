@@ -24,7 +24,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Variables
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-let currentPokemonName = 'pikachu'
+let currentPokemonName = 'null'
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Constants
@@ -39,7 +39,7 @@ searchBtn.addEventListener('click', async () => {
 	let input = document.getElementById('input-pokemon');
 	let pokemon = input.value.toLowerCase();
 	if (pokemon !== currentPokemonName)	{
-		getPokemonData(pokemon);
+		console.log(await getPokemonData(pokemon));
 		currentPokemonName = pokemon;
 	}
 });
@@ -51,11 +51,8 @@ async function getPokemonData(pokeName) {
 
 	let processedData = processData(pokemon, species);
 	let processedStats = processStats(pokemon);
-	let processedEvo = processEvo(evoChain);
+	let processedEvo = processEvo(evoChain.chain);
 	
-	console.log(processedData);
-	console.log(processedStats);
-	console.log(processedEvo);
 	return [processedData, processedStats, processedEvo];
 }
 
@@ -111,11 +108,36 @@ function processStats(pokemonObject){
 }
 
 function processEvo(evoChain){
-	// evoChain.chain.evolves_to	-> array
-	// evoChain.chain.evolves_to.species.name	-> name of evolution
-	return evoChain;
+	if (evoChain.evolves_to.length === 0){
+		return {
+			name: evoChain.species.name,
+			evo: null,
+			trigger: getTriggers(evoChain.evolution_details),
+		};
+	}
+
+	let evos = [];	
+	evoChain.evolves_to.forEach((evo) => {
+		evos.push({name: evoChain.species.name, evo: processEvo(evo), trigger: getTriggers(evoChain.evolution_details)});
+	});
+
+	return evos;
 }
 
+function getTriggers(evoDetails){
+	let triggers = [];
+	let reason;
+	evoDetails.forEach((detail) => {
+		let d = Object.entries(detail);
+		d.forEach((r) => {
+			if((typeof r[1] === 'number' || (typeof r[1] === 'object' && r[1] !== null)) && r[0] !== 'trigger')
+				reason = r;
+		});
+		triggers.push([detail.trigger.name, reason]);
+	});
+
+	return triggers;
+}
 
 
 
