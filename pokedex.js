@@ -85,7 +85,7 @@ function processSpecies(species){
 function processAbilities(abilities){
 	let abs = [];
 	abilities.forEach((a) => {
-		abs.push([a.ability.name, a.is_hidden]);
+		abs.push({ability: a.ability.name, isHidden: a.is_hidden});
 	});
 	return abs;
 }
