@@ -67,8 +67,8 @@ function processData(pokemonObject) {
 
 function processTypes(types){
 	let processedTypes = []
-	types.forEach(type => {
-		processedTypes.push(type.type.name);
+	types.forEach(t => {
+		processedTypes.push(t.type.name);
 	});
 	return processedTypes;
 }
@@ -80,7 +80,11 @@ async function processSpecies(species){
 }
 
 function processAbilities(abilities){
-	console.log(abilities);
+	let abs = [];
+	abilities.forEach((a) => {
+		abs.push([a.ability.name, a.is_hidden]);
+	});
+	return abs;
 }
 
 function processIndeces(indices){
