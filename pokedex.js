@@ -46,9 +46,12 @@ searchBtn.addEventListener('click', async () => {
 
 async function getPokemonData(pokeName) {
 	let pokemon = await fetch(url(pokeName)).then((res) => res.json());
-	let processedData = processData(pokemon);
+	let species = await fetch(pokemon.species.url).then((res) => res.json());
+	let evoChain = await fetch(species.evolution_chain.url).then((res) => res.json());
+
+	let processedData = processData(pokemon, species);
 	let processedStats = processStats(pokemon);
-	let processedEvo = processEvo(pokemon);
+	let processedEvo = processEvo(evoChain);
 	
 	console.log(processedData);
 	console.log(processedStats);
@@ -56,15 +59,16 @@ async function getPokemonData(pokeName) {
 	return [processedData, processedStats, processedEvo];
 }
 
-function processData(pokemonObject) {
+function processData(pokemonObject, species) {
 	return {
 		id: pokemonObject.id,
 		types: processTypes(pokemonObject.types),
-		species: processSpecies(pokemonObject.species),
+		species: processSpecies(species),
 		height: parseInt(pokemonObject.height) / 10,
 		weight: parseInt(pokemonObject.weight) / 10,
 		abilities: processAbilities(pokemonObject.abilities),
-		indices: processIndeces(pokemonObject.game_indices)
+		indices: processIndeces(pokemonObject.game_indices),
+		sprite: pokemonObject.sprites.front_default,
 	}
 }
 
@@ -76,9 +80,8 @@ function processTypes(types){
 	return processedTypes;
 }
 
-async function processSpecies(species){
-	let sp = await fetch(species.url).then((res) => res.json());
-	let s = sp.genera.find((s) => s.language.name === 'en');
+function processSpecies(species){
+	let s = species.genera.find((s) => s.language.name === 'en');
 	return s.genus;
 }
 
@@ -107,8 +110,10 @@ function processStats(pokemonObject){
 	return stats;
 }
 
-function processEvo(pokemonObject){
-
+function processEvo(evoChain){
+	// evoChain.chain.evolves_to	-> array
+	// evoChain.chain.evolves_to.species.name	-> name of evolution
+	return evoChain;
 }
 
 
