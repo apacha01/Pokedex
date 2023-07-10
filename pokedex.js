@@ -35,7 +35,7 @@ const searchBtn = document.getElementById('search-btn');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Code
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-searchBtn.addEventListener('click', () => {
+searchBtn.addEventListener('click', async () => {
 	let input = document.getElementById('input-pokemon');
 	let pokemon = input.value.toLowerCase();
 	if (pokemon !== currentPokemonName)	{
@@ -51,6 +51,9 @@ async function getPokemonData(pokeName) {
 	let processedEvo = processEvo(pokemon);
 	
 	console.log(processedData);
+	console.log(processedStats);
+	console.log(processedEvo);
+	return [processedData, processedStats, processedEvo];
 }
 
 function processData(pokemonObject) {
@@ -97,7 +100,11 @@ function processIndeces(indices){
 }
 
 function processStats(pokemonObject){
-
+	let stats = [];
+	pokemonObject.stats.forEach((s) => {
+		stats.push([s.base_stat, s.stat.name]);
+	});
+	return stats;
 }
 
 function processEvo(pokemonObject){
