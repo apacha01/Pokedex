@@ -24,7 +24,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Variables
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-let currentPokemonName = 'null'
+let currentPokemonName = 'pikachu'
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Constants
@@ -37,15 +37,25 @@ const searchBtn = document.getElementById('search-btn');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 searchBtn.addEventListener('click', async () => {
 	let input = document.getElementById('input-pokemon');
-	let pokemon = input.value.toLowerCase();
+	let pokemon = input.value.toLowerCase() || currentPokemonName;
 	if (pokemon !== currentPokemonName)	{
-		console.log(await getPokemonData(pokemon));
+		let pokeInfo = await getPokemonData(pokemon);
+		console.log(pokeInfo);
+		if (pokeInfo === null) return;
 		currentPokemonName = pokemon;
 	}
 });
 
 async function getPokemonData(pokeName) {
-	let pokemon = await fetch(url(pokeName)).then((res) => res.json());
+	let pokemon = await fetch(url(pokeName)).then((res) => {
+		if (res.ok)	return res.json();
+		else {
+			alert((res.status === 404 ? "Pokémon not found" : "Error " + res.status));
+			return null;
+		}
+	});
+	if (pokemon === null) return pokemon;
+
 	let species = await fetch(pokemon.species.url).then((res) => res.json());
 	let evoChain = await fetch(species.evolution_chain.url).then((res) => res.json());
 
