@@ -1,6 +1,7 @@
 body {
-	background-color: #610300;
+	background-color: #6e190f;
 	font-family: monospace;
+	font-size: 2em;
 }
 
 .pokedex-container {
@@ -8,7 +9,7 @@ body {
 	margin: 10vh 5vw;
 	width: 90vw;
 	height: 80vh;
-	background-color: #E10600;
+	background-color: #E4000F;
 	border-radius: 50px;
 	display: flex;
 	flex-direction: column;
@@ -28,6 +29,7 @@ body {
 
 .pokedex__title {
 	font-size: xxx-large;
+	color: whitesmoke;
 }
 
 .pokedex__img {
@@ -73,7 +75,7 @@ body {
 	width: 30%;
 	height: 95%;
 	font-size: x-large;
-	background-color: #9E000A;
+	background-color: #941810;
 	color: wheat;
 	border-radius: 5px;
 	box-shadow: 3px 3px black;
@@ -87,4 +89,17 @@ body {
 	box-shadow: none;
 	transform: translate(3px, 3px);
 	background-color: #5e000a;
+}
+
+.msg-panel{
+	position: absolute;
+	width: 25%;
+	height: 30%;
+	background-color: #8A0009;
+	color: white;
+	border-radius: 50px;
+	margin-top: 50vh;
+	margin-left: 50vw;
+	transform: translate(-50%, -50%);
+	display: none;
 }
