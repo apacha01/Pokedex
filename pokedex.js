@@ -31,6 +31,10 @@ let currentPokemonName = 'pikachu'
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const url = (poke) => 'https://pokeapi.co/api/v2/pokemon/' + (poke);
 const searchBtn = document.getElementById('search-btn');
+const closePanelBtn = document.getElementById('msg-panel__button');
+let msgPanel = document.getElementById('msg-panel');
+let msgPanelTitle = document.getElementById('msg-panel__title');
+let msgPanelText = document.getElementById('msg-panel__msg');
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Code
@@ -46,11 +50,16 @@ searchBtn.addEventListener('click', async () => {
 	}
 });
 
+closePanelBtn.addEventListener('click', () => msgPanel.classList.remove('show'))
+
 async function getPokemonData(pokeName) {
 	let pokemon = await fetch(url(pokeName)).then((res) => {
 		if (res.ok)	return res.json();
 		else {
-			alert((res.status === 404 ? "Pokémon not found" : "Error " + res.status));
+			msgPanelTitle.textContent = 'There was an error';
+			msgPanelText.textContent = 'Pokémon not found';
+			msgPanel.classList.add('show');
+			
 			return null;
 		}
 	});
