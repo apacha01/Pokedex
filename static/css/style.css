@@ -43,10 +43,12 @@ body {
 	align-items: center;
 	width: 37.5%;
 	height: 90vh;
+	min-width: 400px;
 	background-color: var(--pokered);
 	border-top-left-radius: 40px;
 	border-bottom-left-radius: 40px;
 	box-shadow: -10px 8px 1px -3px #600707;
+	z-index: 1000;
 }
 
 .left__top {
@@ -97,7 +99,7 @@ body {
 	border-color: #fff;
 	border-width: 5px;
 	box-shadow: -1px 3px 0px 3px #600707;
-	z-index: 100;
+	z-index: 1100;
 }
 
 .top-left__color-btns {
@@ -107,7 +109,7 @@ body {
 	height: 15%;
 	margin-top: 7.5%;
 	margin-left: 10px;
-	z-index: 100;
+	z-index: 1100;
 }
 
 .top-left__color-btns--red,
@@ -139,7 +141,7 @@ body {
 	background: linear-gradient(200deg, white, whitesmoke 50%);
 	border-radius: 3px;
 	border-bottom-left-radius: 40px;
-	box-shadow: -2px 3px 0px 1px #600707;
+	box-shadow: -2px 3px 0px 1px #B8B8B8;
 }
 
 .screen__top-btns {
@@ -291,7 +293,7 @@ body {
 	border-top-right-radius: 5px;
 	left: 50%;
 	transform: translate(-50%, 5%);
-	z-index: 140;
+	z-index: 1400;
 }
 
 .arrow-pad__right {
@@ -300,7 +302,7 @@ body {
 	top: 50%;
 	left: 50%;
 	transform: translate(45%, -50%);
-	z-index: 140;
+	z-index: 1400;
 }
 
 .arrow-pad__down {
@@ -309,7 +311,7 @@ body {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, 45%);
-	z-index: 150;
+	z-index: 1500;
 }
 
 .arrow-pad__left {
@@ -318,7 +320,7 @@ body {
 	top: 50%;
 	left: 50%;
 	transform: translate(-145%, -50%);
-	z-index: 150;
+	z-index: 1500;
 }
 
 .arrow-pad__mid {
@@ -326,9 +328,42 @@ body {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	z-index: 145;
+	z-index: 1450;
 	background: radial-gradient(#030303 0%, #212121 60%);
 }
+
+/* Pokedex Center */
+.pokedex__center {
+	position: relative;
+	width: 50px;
+	height: 90vh;
+	border-radius: 1px;
+	background: linear-gradient(90deg, #8a0009, var(--pokered), #8a0009);
+	box-shadow: -16px 6px 0px -1px #600707;
+	z-index: 500;
+}
+
+.center__hinge {
+	position: absolute;
+	width: 50px;
+	height: 30px;
+	background: linear-gradient(90deg, #600707, var(--pokered), #600707);
+	border-bottom: solid 2px #600707;
+	border-top: solid 2px #600707;
+	z-index: 550;
+}
+
+.center__hinge:first-child {
+	margin-top: 8vh;
+}
+
+.center__hinge:last-child {
+	margin-top: 80vh;
+}
+
+/* Pokedex Top Right */
+
+
 
 /* Message Panel */
 .msg-panel {
