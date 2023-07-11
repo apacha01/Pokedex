@@ -1,12 +1,14 @@
 /* Variables */
-:root{
+:root {
 	--pokered: #E4000F;
 }
 
 /* Fonts */
 @font-face {
-    font-family: 'PokeFont'; /*a name to be used later*/
-    src: url('../fonts/PKMN_RBYGSC.ttf'); /*URL to font*/
+	font-family: 'PokeFont';
+	/*a name to be used later*/
+	src: url('../fonts/PKMN_RBYGSC.ttf');
+	/*URL to font*/
 }
 
 /* Styling */
@@ -22,6 +24,58 @@ body {
 	color: black;
 	text-align: center;
 	margin-top: 10px;
+}
+
+.pokedex-container {
+	width: 100%;
+	height: auto;
+	margin-top: 1em;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.pokedex__left {
+	width: 40%;
+	height: 80vh;
+	background-color: var(--pokered);
+	border-top-left-radius: 40px;
+	border-bottom-left-radius: 40px;
+	box-shadow: -10px 8px 1px -3px #600707;
+}
+
+.left__top {
+	display: flex;
+	position: relative;
+	width: 100%;
+	height: 20%;
+}
+
+.left__top-left {
+	width: 50%;
+	height: 100%;
+	background-color: #8A0009;
+	border-bottom-right-radius: 40px;
+	border-top-left-radius: 40px;
+	box-shadow: -10px 8px 1px -3px #600707;
+}
+
+.left__top-right {
+	position: absolute;
+	width: 100%;
+	height: 70%;
+	background-color: #8a0009;
+	border-top-left-radius: 40px;
+}
+
+.left__top-curve {
+	position: absolute;
+	width: 50.5%;
+	height: 50%;
+	background-color: var(--pokered);
+	border-top-left-radius: 40px;
+	margin-left: 49.5%;
+	margin-top: 10%;
 }
 
 .msg-panel {
