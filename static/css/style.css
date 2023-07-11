@@ -54,6 +54,8 @@ body {
 }
 
 .left__top-left {
+	display: flex;
+	flex-wrap: nowrap;
 	width: 50%;
 	height: 100%;
 	background-color: #8A0009;
@@ -87,12 +89,38 @@ body {
 	margin-top: 7.5%;
 	margin-left: 10%;
 	background: linear-gradient(200deg, #e1f4f9 10%, #0d91af);
-	border-radius: 50px;
+	border-radius: 50%;
 	border-style: solid;
 	border-color: #fff;
 	border-width: 5px;
 	box-shadow: -1px 3px 0px 3px #600707;
 	z-index: 100;
+}
+
+.top-left__color-btns {
+	display: flex;
+	justify-content: space-around;
+	width: 50%;
+	height: 15%;
+	margin-top: 7.5%;
+	margin-left: 10px;
+	z-index: 100;
+}
+
+.top-left__color-btns--red, .top-left__color-btns--yellow, .top-left__color-btns--green {
+	width: 15px;
+	height: 15px;
+	border-radius: 50%;
+	box-shadow: -1px 1px 0px 1px #600707;
+	background: linear-gradient(200deg, lightcoral, red);
+}
+
+.top-left__color-btns--yellow {
+	background: linear-gradient(200deg, lightyellow, yellow);
+}
+
+.top-left__color-btns--green {
+	background: linear-gradient(200deg, lightgreen, green);
 }
 
 /* Message Panel */
