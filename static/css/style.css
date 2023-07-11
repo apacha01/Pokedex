@@ -20,7 +20,7 @@ body {
 
 
 .pokedex__title {
-	font-size: xxx-large;
+	font-size: xx-large;
 	color: black;
 	text-align: center;
 	margin-top: 10px;
@@ -30,16 +30,19 @@ body {
 .pokedex-container {
 	width: 100%;
 	height: auto;
-	margin-top: 1em;
+	margin-top: 10px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
 
-/* Pokedex Left */
+/* Pokedex Top Left */
 .pokedex__left {
-	width: 40%;
-	height: 80vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 37.5%;
+	height: 90vh;
 	background-color: var(--pokered);
 	border-top-left-radius: 40px;
 	border-bottom-left-radius: 40px;
@@ -57,37 +60,37 @@ body {
 	display: flex;
 	flex-wrap: nowrap;
 	width: 50%;
-	height: 100%;
+	height: 80%;
 	background-color: #8A0009;
 	border-bottom-right-radius: 40px;
 	border-top-left-radius: 40px;
-	box-shadow: -10px 8px 1px -3px #600707;
+	box-shadow: -2px 8px 0px -1px #600707;
 }
 
 .left__top-right {
 	position: absolute;
 	width: 100%;
-	height: 70%;
+	height: 60%;
 	background-color: #8a0009;
 	border-top-left-radius: 40px;
 }
 
 .left__top-curve {
 	position: absolute;
-	width: 50.5%;
+	width: 51.4%;
 	height: 50%;
 	background-color: var(--pokered);
 	border-top-left-radius: 40px;
-	margin-left: 49.5%;
+	margin-left: 48.6%;
 	margin-top: 10%;
 }
 
 .top-left__camera-glass {
 	position: relative;
-	width: 60px;
-	height: 60px;
+	width: 50px;
+	height: 50px;
 	margin-top: 7.5%;
-	margin-left: 10%;
+	margin-left: 12%;
 	background: linear-gradient(200deg, #e1f4f9 10%, #0d91af);
 	border-radius: 50%;
 	border-style: solid;
@@ -107,9 +110,11 @@ body {
 	z-index: 100;
 }
 
-.top-left__color-btns--red, .top-left__color-btns--yellow, .top-left__color-btns--green {
-	width: 15px;
-	height: 15px;
+.top-left__color-btns--red,
+.top-left__color-btns--yellow,
+.top-left__color-btns--green {
+	width: 17px;
+	height: 17px;
 	border-radius: 50%;
 	box-shadow: -1px 1px 0px 1px #600707;
 	background: linear-gradient(200deg, lightcoral, red);
@@ -122,6 +127,70 @@ body {
 .top-left__color-btns--green {
 	background: linear-gradient(200deg, lightgreen, green);
 }
+
+/* Pokedex Middle Left*/
+.screen-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+	width: 80%;
+	height: 60%;
+	background: linear-gradient(200deg, white, whitesmoke 50%);
+	border-radius: 3px;
+	border-bottom-left-radius: 40px;
+	box-shadow: -2px 3px 0px 1px #600707;
+}
+
+.screen__top-btns {
+	display: flex;
+	justify-content: space-around;
+	width: 10%;
+}
+
+.screen__top-btn,
+.screen__bottom-btn {
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background: linear-gradient(200deg, #ff7575, red);
+	border: solid 1px black;
+}
+
+.screen {
+	aspect-ratio: 1 / 1;
+	height: 75%;
+	background-color: #d8d8d8;
+	border-radius: 5px;
+}
+
+.screen__bottom-details {
+	width: 80%;
+	height: 10%;
+	display: flex;
+	justify-content: space-between;
+}
+
+.screen__bottom-btn {
+	width: 25px;
+	height: 25px;
+}
+
+.screen__bottom-sound{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	width: 30px;
+	height: 30px;
+}
+
+.screen_bottom--sound-bars {
+	width: 100%;
+	height: 2px;
+	border-radius: 1px;
+	background: linear-gradient(#606060, black);
+}
+
 
 /* Message Panel */
 .msg-panel {
