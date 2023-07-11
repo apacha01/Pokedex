@@ -1,0 +1,55 @@
+/* Variables */
+:root{
+	--pokered: #E4000F;
+}
+
+/* Fonts */
+@font-face {
+    font-family: 'PokeFont'; /*a name to be used later*/
+    src: url('../fonts/PKMN_RBYGSC.ttf'); /*URL to font*/
+}
+
+/* Styling */
+body {
+	background-color: wheat;
+	font-family: 'PokeFont', monospace;
+	font-size: 2em;
+}
+
+
+.pokedex__title {
+	font-size: xxx-large;
+	color: black;
+	text-align: center;
+	margin-top: 10px;
+}
+
+.msg-panel {
+	position: absolute;
+	width: 50%;
+	height: 30%;
+	background-color: #8A0009;
+	color: white;
+	text-align: center;
+	border-radius: 50px;
+	margin-top: 50vh;
+	margin-left: 50vw;
+	transform: translate(-50%, -50%);
+	display: none;
+}
+
+.show {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+}
+
+.msg-panel__msg {
+	font-size: x-large;
+}
+
+.msg-panel__button {
+	height: 20%;
+	font-size: 0.85em;
+}
