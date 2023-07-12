@@ -213,7 +213,8 @@ body {
 	cursor: pointer;
 }
 
-.main-controls__big-btn:active {
+.main-controls__big-btn:active,
+.extra-btns:active {
 	background: linear-gradient(200deg, #030303, #212121);
 	box-shadow: 0px 0px 10px 2px #030303 inset;
 }
@@ -227,7 +228,8 @@ body {
 	height: 100%;
 }
 
-.main-controls__btns-conatiner {
+.main-controls__btns-conatiner,
+.extra-btns-container {
 	display: flex;
 	justify-content: space-evenly;
 	align-items: center;
@@ -235,7 +237,8 @@ body {
 	height: 40%;
 }
 
-.main-controls__sm-btn {
+.main-controls__sm-btn,
+.extra-btns {
 	width: 35%;
 	height: 20%;
 	border-radius: 5px;
@@ -442,7 +445,7 @@ body {
 	border-top-left-radius: 10px;
 }
 
- .right__upper-bl-btn:nth-child(5) {
+.right__upper-bl-btn:nth-child(5) {
 	border-top-right-radius: 10px;
 }
 
@@ -466,6 +469,18 @@ body {
 
 .right__lower-bl-btn:active {
 	box-shadow: -3px 4px 5px 1px #1c5481 inset;
+}
+
+.extra-btns-container {
+	width: 80%;
+	height: 5%;
+	justify-content: end;
+	gap: 10px;
+}
+
+.extra-btns {
+	width: 17%;
+	background: linear-gradient(200deg, #212121, #030303);
 }
 
 
