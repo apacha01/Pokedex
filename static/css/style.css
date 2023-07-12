@@ -418,6 +418,56 @@ body {
 	box-shadow: -1px 1px 3px 0px darkgreen;
 }
 
+.blue-btns-container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+	width: 80%;
+	height: 15%;
+	margin-top: 5%;
+}
+
+.right__lower-bl-btn,
+.right__upper-bl-btn {
+	width: 20%;
+	height: 49%;
+	background: linear-gradient(190deg, #38bbff, #28abfc);
+	box-shadow: -1px 1px 0px 1px #0c2132;
+	cursor: pointer;
+	z-index: 150;
+	border-radius: 1px;
+}
+
+.right__upper-bl-btn:first-child {
+	border-top-left-radius: 10px;
+}
+
+ .right__upper-bl-btn:nth-child(5) {
+	border-top-right-radius: 10px;
+}
+
+.right__lower-bl-btn:nth-child(6) {
+	border-bottom-left-radius: 10px;
+}
+
+.right__lower-bl-btn:nth-child(10) {
+	border-bottom-right-radius: 10px;
+}
+
+.right__upper-bl-btn:active,
+.right__lower-bl-btn:active {
+	transform: translate(-2px, 1px);
+	z-index: 140;
+}
+
+.right__upper-bl-btn:active {
+	box-shadow: -2px 3px 5px 1px #1c5481 inset;
+}
+
+.right__lower-bl-btn:active {
+	box-shadow: -3px 4px 5px 1px #1c5481 inset;
+}
+
 
 /* Message Panel */
 .msg-panel {
