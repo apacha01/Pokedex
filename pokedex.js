@@ -1,12 +1,13 @@
 /**
  * Pokedex Data
- * 	National N
+ * 	N in pokedex
+ *	name
  * 	Type
  * 	Species
  * 	Height
  * 	Weight
  * 	Abilities
- * 	Local N -> (dropdown list for each game)
+ *  Flavor
  * 
  * Pokedex Stats
  * 	hp
@@ -16,49 +17,26 @@
  * 	sp def
  * 	speed
  * 	total
- * 
- * Pokedex Evo
- * 	Next Pokemon -> trigger of evo
- * 	repeat whole chain
  */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Variables
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-let currentPokemonName = 'pikachu'
+let currentPokemonName = 'pikachu';
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Constants
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const url = (poke) => 'https://pokeapi.co/api/v2/pokemon/' + (poke);
-const searchBtn = document.getElementById('search-btn');
-const closePanelBtn = document.getElementById('msg-panel__button');
-let msgPanel = document.getElementById('msg-panel');
-let msgPanelTitle = document.getElementById('msg-panel__title');
-let msgPanelText = document.getElementById('msg-panel__msg');
+const GBCnl = "";	// Game Boy Console new line character.
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Code
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-searchBtn.addEventListener('click', async () => {
-	let input = document.getElementById('input-pokemon');
-	let pokemon = input.value.toLowerCase() || currentPokemonName;
-	if (pokemon !== currentPokemonName)	{
-		let pokeInfo = await getPokemonData(pokemon);
-		console.log(pokeInfo);
-		if (pokeInfo === null) return;
-		currentPokemonName = pokemon;
-	}
-});
-
-closePanelBtn.addEventListener('click', () => msgPanel.classList.remove('show'))
-
 async function getPokemonData(pokeName) {
 	let pokemon = await fetch(url(pokeName)).then((res) => {
 		if (res.ok)	return res.json();
 		else {
-			msgPanelTitle.textContent = 'There was an error';
-			msgPanelText.textContent = 'Pokémon not found';
-			msgPanel.classList.add('show');
+			// print error in some of the small displays
 			
 			return null;
 		}
@@ -66,25 +44,24 @@ async function getPokemonData(pokeName) {
 	if (pokemon === null) return pokemon;
 
 	let species = await fetch(pokemon.species.url).then((res) => res.json());
-	let evoChain = await fetch(species.evolution_chain.url).then((res) => res.json());
 
 	let processedData = processData(pokemon, species);
 	let processedStats = processStats(pokemon);
-	let processedEvo = processEvo(evoChain.chain);
 	
-	return [processedData, processedStats, processedEvo];
+	return [processedData, processedStats];
 }
 
 function processData(pokemonObject, species) {
 	return {
 		id: pokemonObject.id,
+		name: pokemonObject.name,
 		types: processTypes(pokemonObject.types),
 		species: processSpecies(species),
 		height: parseInt(pokemonObject.height) / 10,
 		weight: parseInt(pokemonObject.weight) / 10,
 		abilities: processAbilities(pokemonObject.abilities),
-		indices: processIndeces(pokemonObject.game_indices),
 		sprite: pokemonObject.sprites.front_default,
+		flavor: processFlavors(species.flavor_text_entries),
 	}
 }
 
@@ -109,15 +86,6 @@ function processAbilities(abilities){
 	return abs;
 }
 
-function processIndeces(indices){
-	let ixs = new Map();
-	indices.forEach((index) => {
-		if (ixs.has(index.game_index))	ixs.get(index.game_index).push(index.version.name);
-		else ixs.set(index.game_index, [index.version.name]);
-	});
-	return ixs;
-}
-
 function processStats(pokemonObject){
 	let stats = [];
 	pokemonObject.stats.forEach((s) => {
@@ -126,37 +94,18 @@ function processStats(pokemonObject){
 	return stats;
 }
 
-function processEvo(evoChain){
-	if (evoChain.evolves_to.length === 0){
-		return {
-			name: evoChain.species.name,
-			evo: null,
-			trigger: getTriggers(evoChain.evolution_details),
-		};
+function processFlavors(flavors) {
+	// Red should be the first one if pokemon is in Pokemon Red, but just in case...
+	for (let i = 0; i < flavors.length; i++) {
+		if (flavors[i].language.name === 'en' && flavors[i].version.name === 'red')
+			return flavors[i].flavor_text;
 	}
-
-	let evos = [];	
-	evoChain.evolves_to.forEach((evo) => {
-		evos.push({name: evoChain.species.name, evo: processEvo(evo), trigger: getTriggers(evoChain.evolution_details)});
-	});
-
-	return evos;
+	// If pokemon is not in Pokemon Red just return the first flavor
+	return flavors[0].flavor_text;
 }
 
-function getTriggers(evoDetails){
-	let triggers = [];
-	let reason;
-	evoDetails.forEach((detail) => {
-		let d = Object.entries(detail);
-		d.forEach((r) => {
-			if((typeof r[1] === 'number' || (typeof r[1] === 'object' && r[1] !== null)) && r[0] !== 'trigger')
-				reason = r;
-		});
-		triggers.push([detail.trigger.name, reason]);
-	});
-
-	return triggers;
-}
+let pokedata = getPokemonData(currentPokemonName);
+console.log(pokedata);
 
 
 
