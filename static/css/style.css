@@ -266,13 +266,14 @@ body {
 	box-shadow: -1px 1px 0px 1px #004848 inset;
 }
 
-.main-controls__secondary-screen {
+.main-controls__secondary-screen, .extra-screen, .bottom__screen {
 	width: 80%;
 	height: 50%;
 	background-color: #9bc24d;
-	box-shadow: -3px 3px 5px 1px #577422 inset;
-	border: solid black 2px;
-	border-radius: 10px;
+	background: linear-gradient(190deg, #a2b92f, #a6bd32);
+    border-radius: 5px;
+    box-shadow: -3px 3px 10px 1px darkgreen inset;
+    outline: black solid 1px;
 }
 
 .main-controls__arrow-pad {
@@ -418,10 +419,10 @@ body {
 .extra-screen {
 	width: 85%;
 	height: 20%;
-	background: linear-gradient(190deg, #9bc24d, green);
-	border-radius: 20px;
-	box-shadow: -1px 1px 3px 0px darkgreen;
+	margin-top: 3%;
 }
+
+/* Pokedex Mid Right */
 
 .blue-btns-container {
 	display: flex;
@@ -485,6 +486,8 @@ body {
 	background: linear-gradient(200deg, #212121, #030303);
 }
 
+/* Pokedex Bottom Right */
+
 .bottom-container {
 	display: flex;
 	justify-content: space-between;
@@ -532,6 +535,20 @@ body {
 	box-shadow: -1px 1px 0px 0px darkorange;
 }
 
+.bottom-screens-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 85%;
+	height: 10%;
+	margin-top: 10%;
+}
+
+.bottom__screen {
+	width: 45%;
+	height: 100%;
+	margin: 0;
+}
 
 /* Message Panel */
 .msg-panel {
