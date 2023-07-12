@@ -42,7 +42,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	width: 37.5%;
+	width: 400px;
 	height: 90vh;
 	min-width: 400px;
 	background-color: var(--pokered);
@@ -123,7 +123,8 @@ body {
 	background: linear-gradient(200deg, lightcoral, red);
 }
 
-.top-left__color-btns--yellow {
+.top-left__color-btns--yellow,
+.bottom__light {
 	background: linear-gradient(200deg, lightyellow, yellow);
 }
 
@@ -341,6 +342,7 @@ body {
 	position: relative;
 	width: 50px;
 	height: 90vh;
+	min-width: 50px;
 	border-radius: 1px;
 	background: linear-gradient(90deg, #8a0009, var(--pokered), #8a0009);
 	box-shadow: -16px 6px 0px -1px #600707;
@@ -367,7 +369,7 @@ body {
 
 /* Pokedex Top Right */
 .pokedex__right {
-	width: 37.5%;
+	width: 400px;
 	height: 90vh;
 	min-width: 400px;
 	display: flex;
@@ -425,7 +427,7 @@ body {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-evenly;
-	width: 80%;
+	width: 85%;
 	height: 15%;
 	margin-top: 5%;
 }
@@ -433,7 +435,7 @@ body {
 .right__lower-bl-btn,
 .right__upper-bl-btn {
 	width: 20%;
-	height: 49%;
+	height: 48%;
 	background: linear-gradient(190deg, #38bbff, #28abfc);
 	box-shadow: -1px 1px 0px 1px #0c2132;
 	cursor: pointer;
@@ -472,15 +474,62 @@ body {
 }
 
 .extra-btns-container {
-	width: 80%;
+	width: 85%;
 	height: 5%;
 	justify-content: end;
 	gap: 10px;
 }
 
 .extra-btns {
-	width: 17%;
+	width: 15%;
 	background: linear-gradient(200deg, #212121, #030303);
+}
+
+.bottom-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	width: 85%;
+	height: 7%;
+	margin-top: 5%;
+}
+
+.bottom__btns-container {
+	display: flex;
+	width: 35%;
+	height: 100%;
+}
+
+.bottom-btn {
+	width: 50%;
+	height: 100%;
+	background-color: whitesmoke;
+	box-shadow: -1px 1px 0px 1px #B8B8B8;
+	cursor: pointer;
+	z-index: 160;
+}
+
+.bottom-btn:active {
+	box-shadow: -1px 1px 5px 1px #B8B8B8 inset;
+	transform: translate(-1px, 1px);
+	z-index: 155;
+}
+
+.bottom-btn:first-child {
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+}
+
+.bottom-btn:nth-child(2) {
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
+.bottom__light {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	box-shadow: -1px 1px 0px 0px darkorange;
 }
 
 
