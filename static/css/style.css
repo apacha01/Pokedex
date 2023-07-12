@@ -1,6 +1,7 @@
 /* Variables */
 :root {
 	--pokered: #E4000F;
+	--bg-color: wheat;
 }
 
 /* Fonts */
@@ -13,7 +14,7 @@
 
 /* Styling */
 body {
-	background-color: wheat;
+	background-color: var(--bg-color);
 	font-family: 'PokeFont', monospace;
 	font-size: 2em;
 }
@@ -362,7 +363,51 @@ body {
 }
 
 /* Pokedex Top Right */
+.pokedex__right {
+	width: 37.5%;
+	height: 90vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: var(--pokered);
+	border-bottom-right-radius: 40px;
+	box-shadow: -15px 3px 0px 2px #600707;
+	z-index: 100;
+}
 
+.right__top {
+	position: relative;
+	width: 100%;
+	height: 20%;
+}
+
+.right__top-back {
+	position: absolute;
+	background-color: var(--bg-color);
+	width: 100%;
+	height: 60%;
+	z-index: 110;
+}
+
+.right__top-left {
+	position: absolute;
+	width: 51.4%;
+	height: 50%;
+	background-color: var(--pokered);
+	border-top-right-radius: 40px;
+	margin-top: 10%;
+	z-index: 120;
+}
+
+.right__top-curve {
+	position: absolute;
+	background-color: var(--bg-color);
+	width: 50%;
+	height: 80%;
+	border-bottom-left-radius: 40px;
+	margin-left: 50%;
+	z-index: 130;
+}
 
 
 /* Message Panel */
