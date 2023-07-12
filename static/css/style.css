@@ -366,6 +366,7 @@ body {
 .pokedex__right {
 	width: 37.5%;
 	height: 90vh;
+	min-width: 400px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -407,6 +408,14 @@ body {
 	border-bottom-left-radius: 40px;
 	margin-left: 50%;
 	z-index: 130;
+}
+
+.extra-screen {
+	width: 85%;
+	height: 20%;
+	background: linear-gradient(190deg, #9bc24d, green);
+	border-radius: 20px;
+	box-shadow: -1px 1px 3px 0px darkgreen;
 }
 
 
