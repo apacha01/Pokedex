@@ -562,9 +562,11 @@ body {
 }
 
 .pokedex-entry__up {
+	display: flex;
 	width: 100%;
 	height: 49%;
-	background-color: red;
+	font-size: 14px;
+	background-color: f8f8f8;
 }
 
 .pokedex-entry__mid {
@@ -603,4 +605,38 @@ body {
 	width: 100%;
 	height: 49%;
 	background-color: blue;
+}
+
+.entry-up__left {
+	display: flex;
+	flex-direction: column;
+	width: 50%;
+	height: 100%;
+	justify-content: center;
+	align-items: center;
+}
+
+.left__poke-img {
+	background-image: url("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png");
+	aspect-ratio: 1 / 1;
+	min-width: 96px;
+}
+
+.left__poke-id {
+	height: 10%;
+}
+
+.entry-up__right {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	width: 50%;
+	height: 100%;
+	padding-right: 12px;
+}
+
+.up__info {
+	display: flex;
+	justify-content: space-between;
+	height: 15%;
 }
