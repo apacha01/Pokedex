@@ -59,6 +59,8 @@ searchBtn.addEventListener('click', async () => {
 					return res;
 				})
 				.catch((err) => {loadingTxt.innerText = 'Error'; console.log(err);});
+
+	if (data === null) return;
 	console.log(data);
 	updatePokedexEntry(data);
 });
@@ -150,6 +152,12 @@ function updatePokedexEntry(data) {
 	// it seems the coma is just decoration: https://www.youtube.com/watch?v=3npx3FFvo-I
 	// every weight is X.0 lb so i'll do it like that
 	pokeWeight.innerText = formatWeight(data[0].weight);
+
+	if (pokeName.innerText.length >= 11) pokeName.style.fontSize = '12px';
+	else pokeName.style.fontSize = '14px';
+
+	if (pokeSpecies.innerText.length >= 10)	pokeSpecies.style.fontSize = '12px';
+	else pokeSpecies.style.fontSize = '14px';
 }
 
 function formatId(id) {
@@ -165,11 +173,14 @@ function formatId(id) {
 }
 
 function formatHeight (decimiters) {
-	let absolute = Math.ceil((decimiters * 10) / 2.54);
+	let absolute = Math.round((decimiters * 10) / 2.54);
 	let foot = Math.floor(absolute / 12);
 	let inches = absolute - (foot * 12);
-	
-	return `${foot}' ${inches}''`;
+
+	let height = `${foot}' `;
+	height += inches < 10 ? `0${inches}''` : `${inches}''`;
+
+	return height;
 }
 
 function formatWeight (hectograms) {
