@@ -31,6 +31,12 @@ const GBCnl = "";	// Game Boy Console new line character.
 const searchBtn = document.getElementById('search-btn');
 const searchBar = document.getElementById('search-bar');
 const loadingTxt = document.getElementById('loading-text');
+const pokeImg = document.getElementById('poke-img');
+const pokeId = document.getElementById('poke-id');
+const pokeName = document.getElementById('poke-name');
+const pokeSpecies = document.getElementById('poke-species');
+const pokeHeight = document.getElementById('poke-height');
+const pokeWeight = document.getElementById('poke-weight');
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -54,6 +60,7 @@ searchBtn.addEventListener('click', async () => {
 				})
 				.catch((err) => {loadingTxt.innerText = 'Error'; console.log(err);});
 	console.log(data);
+	updatePokedexEntry(data);
 });
 
 async function getPokemonData(pokeName) {
@@ -81,8 +88,8 @@ function processData(pokemonObject, species) {
 		name: pokemonObject.name,
 		types: processTypes(pokemonObject.types),
 		species: processSpecies(species),
-		height: parseInt(pokemonObject.height) / 10,
-		weight: parseInt(pokemonObject.weight) / 10,
+		height: parseInt(pokemonObject.height),
+		weight: parseInt(pokemonObject.weight),
 		abilities: processAbilities(pokemonObject.abilities),
 		sprite: pokemonObject.sprites.front_default,
 		flavor: processFlavors(species.flavor_text_entries),
@@ -128,6 +135,46 @@ function processFlavors(flavors) {
 	return flavors[0].flavor_text;
 }
 
+function updatePokedexEntry(data) {
+	pokeId.innerText = formatId(data[0].id);
+	pokeImg.style.backgroundImage = `url(${data[0].sprite})`;
+	pokeName.innerText = data[0].name.toUpperCase();
 
+	// species always include a Pokémon at the end (e.g. Flame Pokemon, Seed Pokemon, etc.)
+	pokeSpecies.innerText = data[0].species.replace(' Pokémon', '').toUpperCase();
+
+	// 1 foot = 12 inches, 1 inch = 2.54 cm. Pokeapi gives height in decimiters
+	pokeHeight.innerText = formatHeight(data[0].height);
+
+	// 1 pound = 2.2046 kg .Pokeapi gives weight in hectograms
+	// it seems the coma is just decoration: https://www.youtube.com/watch?v=3npx3FFvo-I
+	// every weight is X.0 lb so i'll do it like that
+	pokeWeight.innerText = formatWeight(data[0].weight);
+}
+
+function formatId(id) {
+	// equal length strings
+	let fid = 'No. ';
+
+	if (id < 10)
+		fid += '00';
+	else if (id < 100)
+		fid += '0';
+
+	return fid + id; 
+}
+
+function formatHeight (decimiters) {
+	let absolute = Math.ceil((decimiters * 10) / 2.54);
+	let foot = Math.floor(absolute / 12);
+	let inches = absolute - (foot * 12);
+	
+	return `${foot}' ${inches}''`;
+}
+
+function formatWeight (hectograms) {
+	let weight = Math.ceil(hectograms * 0.22046);
+	return `${weight}.0 lb`;
+}
 
 
