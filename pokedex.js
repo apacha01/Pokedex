@@ -37,9 +37,21 @@ const loadingTxt = document.getElementById('loading-text');
 // Code
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 searchBtn.addEventListener('click', async () => {
-	loadingTxt.innerText = 'Loading . . .';
+	loadingTxt.innerText = 'Loading';
+	let dotsInterv = setInterval(() => {
+		if(loadingTxt.innerText.length === 13) loadingTxt.innerText = 'Loading';
+		loadingTxt.innerText += ' .';
+	}, 250);
 	let data = await getPokemonData(searchBar.value.toLowerCase())
-				.then((res) => {loadingTxt.innerText = 'Ready'; return res;})
+				.then((res) => {
+					if (res === null)
+						loadingTxt.innerText = 'Not Found';
+					else
+						loadingTxt.innerText = 'Ready';
+
+					clearInterval(dotsInterv);
+					return res;
+				})
 				.catch((err) => {loadingTxt.innerText = 'Error'; console.log(err);});
 	console.log(data);
 });
