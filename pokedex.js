@@ -28,10 +28,22 @@ let currentPokemonName = 'pikachu';
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const url = (poke) => 'https://pokeapi.co/api/v2/pokemon/' + (poke);
 const GBCnl = "";	// Game Boy Console new line character.
+const searchBtn = document.getElementById('search-btn');
+const searchBar = document.getElementById('search-bar');
+const loadingTxt = document.getElementById('loading-text');
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Code
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+searchBtn.addEventListener('click', async () => {
+	loadingTxt.innerText = 'Loading . . .';
+	let data = await getPokemonData(searchBar.value.toLowerCase())
+				.then((res) => {loadingTxt.innerText = 'Ready'; return res;})
+				.catch((err) => {loadingTxt.innerText = 'Error'; console.log(err);});
+	console.log(data);
+});
+
 async function getPokemonData(pokeName) {
 	let pokemon = await fetch(url(pokeName)).then((res) => {
 		if (res.ok)	return res.json();
@@ -103,9 +115,6 @@ function processFlavors(flavors) {
 	// If pokemon is not in Pokemon Red just return the first flavor
 	return flavors[0].flavor_text;
 }
-
-let pokedata = getPokemonData(currentPokemonName);
-console.log(pokedata);
 
 
 

@@ -196,7 +196,7 @@ body {
 }
 
 /* Pokedex Bottom Left */
-.main-controls-conatiner {
+.main-controls-container {
 	display: flex;
 	flex-wrap: nowrap;
 	justify-content: space-evenly;
@@ -274,8 +274,15 @@ body {
 	background-color: #9bc24d;
 	background: linear-gradient(190deg, #a2b92f, #a6bd32);
 	border-radius: 5px;
-	box-shadow: -3px 3px 10px 1px darkgreen inset;
+	box-shadow: -1px 2px 0px 0px darkgreen inset;
 	outline: black solid 1px;
+}
+
+.main-controls__secondary-screen {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 18px;
 }
 
 .main-controls__arrow-pad {
@@ -422,6 +429,7 @@ body {
 	width: 85%;
 	height: 20%;
 	margin-top: 3%;
+	text-align: center;
 }
 
 /* Pokedex Mid Right */
