@@ -78,12 +78,16 @@ moveRightBtn.addEventListener('click', async () => {
 	let nextId = parseInt(pokeId.innerText.substring(4)) + 1;
 	if (nextId < 152)
 		changePokemonEntry(nextId);
+	pokeEntryDownArrow.classList.remove('hide');
+	isTop = true;
 });
 
 moveLeftBtn.addEventListener('click', async () => {
 	let prevId = parseInt(pokeId.innerText.substring(4)) - 1;
 	if (prevId > 0)
 		changePokemonEntry(prevId);
+	pokeEntryDownArrow.classList.remove('hide');
+	isTop = true;
 });
 
 async function changePokemonEntry(poke) {
