@@ -23,6 +23,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 let currentPokemonName = 'pikachu';
 let currentPokemonFlavor;
+let isTop = true;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Constants
@@ -44,7 +45,8 @@ const arrowPadRightBtn = document.getElementById('arrow-pad-right');
 const arrowPadDownBtn = document.getElementById('arrow-pad-down');
 const arrowPadLeftBtn = document.getElementById('arrow-pad-left');
 const pokeEntryDownArrow = document.getElementById('flavor-down-arrow');
-
+const moveRightBtn = document.getElementById('right-btn');
+const moveLeftBtn = document.getElementById('left-btn');
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Code
@@ -53,6 +55,42 @@ searchBtn.addEventListener('click', async () => {
 	let poke = searchBar.value.toLowerCase();
 	if (poke === currentPokemonName) return;
 
+	changePokemonEntry(poke);
+});
+
+arrowPadUpBtn.addEventListener('click', () => {
+	if (!isTop) {
+		updateLines(currentPokemonFlavor, true);
+		pokeEntryDownArrow.classList.remove('hide');
+		isTop = true;
+	}
+});
+
+arrowPadDownBtn.addEventListener('click', () => {
+	if (isTop) {
+		updateLines(currentPokemonFlavor, false);
+		pokeEntryDownArrow.classList.add('hide');
+		isTop = false;
+	}
+});
+
+moveRightBtn.addEventListener('click', async () => {
+	let nextId = parseInt(pokeId.innerText.substring(4)) + 1;
+	if (nextId < 152) {
+		await changePokemonEntry(nextId);
+		searchBar.value = currentPokemonName.charAt(0).toUpperCase() + currentPokemonName.slice(1);
+	}
+});
+
+moveLeftBtn.addEventListener('click', async () => {
+	let prevId = parseInt(pokeId.innerText.substring(4)) - 1;
+	if (prevId > 0) {
+		await changePokemonEntry(prevId);
+		searchBar.value = currentPokemonName.charAt(0).toUpperCase() + currentPokemonName.slice(1);
+	}
+});
+
+async function changePokemonEntry(poke) {
 	loadingTxt.innerText = 'Loading';
 	let dotsInterv = setInterval(() => {
 		if(loadingTxt.innerText.length === 13) loadingTxt.innerText = 'Loading';
@@ -62,7 +100,6 @@ searchBtn.addEventListener('click', async () => {
 	let data = await getPokemonData(poke)
 				.then((res) => {clearInterval(dotsInterv); return res;})
 				.catch((err) => {loadingTxt.innerText = 'Error'; console.log(err);});
-
 	
 	if (data === null) {
 		loadingTxt.innerText = 'Not Found';
@@ -75,20 +112,10 @@ searchBtn.addEventListener('click', async () => {
 	else
 		loadingTxt.innerText = 'Ready';
 
-	currentPokemonName = poke;
+	currentPokemonName = data[0].name;
 
 	updatePokedexEntry(data);
-});
-
-arrowPadUpBtn.addEventListener('click', () => {
-	updateLines(currentPokemonFlavor, true);
-	pokeEntryDownArrow.classList.remove('hide');
-});
-
-arrowPadDownBtn.addEventListener('click', () => {
-	updateLines(currentPokemonFlavor, false);
-	pokeEntryDownArrow.classList.add('hide');
-});
+}
 
 async function getPokemonData(pokeName) {
 	let pokemon = await fetch(url(pokeName)).then((res) => {
