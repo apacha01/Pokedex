@@ -706,3 +706,7 @@ body {
 		visibility: hidden;
 	}
 }
+
+.hide {
+	display: none;
+}

@@ -22,6 +22,7 @@
 // Variables
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 let currentPokemonName = 'pikachu';
+let currentPokemonFlavor;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Constants
@@ -37,32 +38,56 @@ const pokeName = document.getElementById('poke-name');
 const pokeSpecies = document.getElementById('poke-species');
 const pokeHeight = document.getElementById('poke-height');
 const pokeWeight = document.getElementById('poke-weight');
+const flavorLetters = document.getElementsByClassName('flavor__letter');
+const arrowPadUpBtn = document.getElementById('arrow-pad-up');
+const arrowPadRightBtn = document.getElementById('arrow-pad-right');
+const arrowPadDownBtn = document.getElementById('arrow-pad-down');
+const arrowPadLeftBtn = document.getElementById('arrow-pad-left');
+const pokeEntryDownArrow = document.getElementById('flavor-down-arrow');
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Code
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 searchBtn.addEventListener('click', async () => {
+	let poke = searchBar.value.toLowerCase();
+	if (poke === currentPokemonName) return;
+
 	loadingTxt.innerText = 'Loading';
 	let dotsInterv = setInterval(() => {
 		if(loadingTxt.innerText.length === 13) loadingTxt.innerText = 'Loading';
 		loadingTxt.innerText += ' .';
 	}, 250);
-	let data = await getPokemonData(searchBar.value.toLowerCase())
-				.then((res) => {
-					if (res === null)
-						loadingTxt.innerText = 'Not Found';
-					else
-						loadingTxt.innerText = 'Ready';
 
-					clearInterval(dotsInterv);
-					return res;
-				})
+	let data = await getPokemonData(poke)
+				.then((res) => {clearInterval(dotsInterv); return res;})
 				.catch((err) => {loadingTxt.innerText = 'Error'; console.log(err);});
 
-	if (data === null) return;
-	console.log(data);
+	
+	if (data === null) {
+		loadingTxt.innerText = 'Not Found';
+		return;
+	}
+	else if (data[0].id >= 152) {
+		loadingTxt.innerText = 'Not Gen I';
+		return;
+	}
+	else
+		loadingTxt.innerText = 'Ready';
+
+	currentPokemonName = poke;
+
 	updatePokedexEntry(data);
+});
+
+arrowPadUpBtn.addEventListener('click', () => {
+	updateLines(currentPokemonFlavor, true);
+	pokeEntryDownArrow.classList.remove('hide');
+});
+
+arrowPadDownBtn.addEventListener('click', () => {
+	updateLines(currentPokemonFlavor, false);
+	pokeEntryDownArrow.classList.add('hide');
 });
 
 async function getPokemonData(pokeName) {
@@ -156,8 +181,11 @@ function updatePokedexEntry(data) {
 	if (pokeName.innerText.length >= 11) pokeName.style.fontSize = '12px';
 	else pokeName.style.fontSize = '14px';
 
-	if (pokeSpecies.innerText.length >= 10)	pokeSpecies.style.fontSize = '12px';
+	if (pokeSpecies.innerText.length >= 11)	pokeSpecies.style.fontSize = '12px';
 	else pokeSpecies.style.fontSize = '14px';
+
+	updateFlavor(data[0].flavor);
+	updateLines(currentPokemonFlavor, true);
 }
 
 function formatId(id) {
@@ -188,4 +216,24 @@ function formatWeight (hectograms) {
 	return `${weight}.0 lb`;
 }
 
+function updateFlavor(flavor) {
+	let flavorTop = flavor.substring(0, flavor.indexOf(GBCnl));
+	let flavorBottom = flavor.substring(flavor.indexOf(GBCnl) + 1, flavor.length);
 
+	let topLines = flavorTop.split('\n');
+	let bottomLines = flavorBottom.split('\n');
+
+	currentPokemonFlavor = [topLines, bottomLines];
+}
+
+function updateLines(flavor, top) {
+	let lines;
+	if (top) lines = flavor[0];
+	else lines = flavor[1];
+
+	for (let i = 0; i < 18; i++) {
+		flavorLetters[i].innerText = (lines[0][i] || ' ');
+		flavorLetters[i + 18].innerText = (lines[1][i] || ' ');
+		flavorLetters[i + 36].innerText = (lines[2][i] || ' ');
+	}
+}
