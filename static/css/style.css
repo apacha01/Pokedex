@@ -343,7 +343,7 @@ body {
 	left: 50%;
 	transform: translate(-50%, -50%);
 	z-index: 1450;
-	background: radial-gradient(#030303 0%, #212121 60%);
+	background-color: #212121;
 }
 
 /* Pokedex Center */
