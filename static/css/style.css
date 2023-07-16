@@ -586,14 +586,14 @@ body {
 	outline: 5px solid grey;
 	box-sizing: border-box;
 	font-size: 14px;
+	background-color: #f8f8f8;
 }
 
 /* Pokedex Entry Info Up */
-.pokedex-entry__up {
+.general-info__up {
 	display: flex;
 	width: 100%;
 	height: 49%;
-	background-color: #f8f8f8;
 	z-index: 2000;
 }
 
@@ -632,7 +632,7 @@ body {
 }
 
 /* Pokedex Entry Info Mid */
-.pokedex-entry__mid {
+.general-info__mid {
 	position: relative;
 	display: flex;
 	justify-content: space-between;
@@ -666,7 +666,7 @@ body {
 }
 
 /* Pokedex Entry Info Down */
-.pokedex-entry__down {
+.general-info__down {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-evenly;
@@ -674,7 +674,6 @@ body {
 	position: relative;
 	width: 100%;
 	height: 49%;
-	background-color: #f8f8f8;
 	z-index: 2000;
 }
 
@@ -725,6 +724,116 @@ body {
 	}
 }
 
+/* Pokedex Entry Stats */
+.stats__top {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: 40%;
+}
+
+/* Pokedex Entry Stats Top*/
+.stats-top__left {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 35%;
+	height: 100%;
+}
+
+.stats__poke-img {
+	width: 96px;
+	height: 96px;
+}
+
+.stats__id-container {
+	display: flex;
+	align-items: baseline;
+}
+
+.stats__id-txt {
+	width: 24px;
+	height: 10px;
+	background: no-repeat url('../imgs/id-text.png');
+	margin-right: 2px;
+}
+
+.stats-top__right {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: 52%;
+	height: 90%;
+	box-shadow: 2px 2px 0px 2px black;
+	margin-left: 15px;
+	padding: 0 5px;
+}
+
+.stats__hp-lv-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+	align-self: flex-end;
+	width: 80%;
+	height: 50%;
+}
+
+.stats__level-container {
+	display: flex;
+	justify-content: center;
+	align-items: baseline;
+	width: 100%;
+}
+
+.level-txt {
+	width: 12px;
+	height: 10px;
+	background: no-repeat url('../imgs/level-text.png');
+	margin-right: 2px;
+}
+
+.stats__hp-container {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.hp__tag {
+	width: 22px;
+	height: 8px;
+	background: no-repeat url('../imgs/hp-text.png');
+}
+
+.hp__bar {
+	width: 75%;
+	height: 6px;
+	border: solid black 2px;
+}
+
+.hp__stat {
+	align-self: flex-end;
+	padding-right: 5px;
+}
+
+.stats__state {
+	margin-top: 10px;
+}
+
+.stats__half-arrow {
+	position: absolute;
+	background: no-repeat url(../imgs/half-left-arrow.png);
+	width: 16px;
+	height: 8px;
+	top: 100%;
+	left: 0;
+	transform: translate(-100%, -50%);
+}
+
+/* Utilities */
 .hide {
 	display: none;
 }
