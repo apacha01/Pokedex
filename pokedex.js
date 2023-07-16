@@ -21,7 +21,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Variables
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-let currentPokemonName = 'pikachu';
+let currentPokemonName = '';
 let currentPokemonFlavor;
 let isTop = true;
 
@@ -76,18 +76,14 @@ arrowPadDownBtn.addEventListener('click', () => {
 
 moveRightBtn.addEventListener('click', async () => {
 	let nextId = parseInt(pokeId.innerText.substring(4)) + 1;
-	if (nextId < 152) {
-		await changePokemonEntry(nextId);
-		searchBar.value = currentPokemonName.charAt(0).toUpperCase() + currentPokemonName.slice(1);
-	}
+	if (nextId < 152)
+		changePokemonEntry(nextId);
 });
 
 moveLeftBtn.addEventListener('click', async () => {
 	let prevId = parseInt(pokeId.innerText.substring(4)) - 1;
-	if (prevId > 0) {
-		await changePokemonEntry(prevId);
-		searchBar.value = currentPokemonName.charAt(0).toUpperCase() + currentPokemonName.slice(1);
-	}
+	if (prevId > 0)
+		changePokemonEntry(prevId);
 });
 
 async function changePokemonEntry(poke) {
@@ -113,6 +109,7 @@ async function changePokemonEntry(poke) {
 		loadingTxt.innerText = 'Ready';
 
 	currentPokemonName = data[0].name;
+	searchBar.value = currentPokemonName.charAt(0).toUpperCase() + currentPokemonName.slice(1);
 
 	updatePokedexEntry(data);
 }
@@ -264,3 +261,6 @@ function updateLines(flavor, top) {
 		flavorLetters[i + 36].innerText = (lines[2][i] || ' ');
 	}
 }
+
+// Start with pikachu
+changePokemonEntry('pikachu');
