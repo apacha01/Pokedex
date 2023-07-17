@@ -823,10 +823,28 @@ body {
 	background-color: #f8f8f8;
 }
 
-.hp-bar__corner:nth-child(1) {top: 0; left: 0; transform: translate(-100%, -100%);}
-.hp-bar__corner:nth-child(2) {top: 0; left: 100%; transform: translateY(-100%);}
-.hp-bar__corner:nth-child(3) {top: 100%; left: 0; transform: translateX(-100%);}
-.hp-bar__corner:nth-child(4) {top: 100%; left: 100%;}
+.hp-bar__corner:nth-child(1) {
+	top: 0;
+	left: 0;
+	transform: translate(-100%, -100%);
+}
+
+.hp-bar__corner:nth-child(2) {
+	top: 0;
+	left: 100%;
+	transform: translateY(-100%);
+}
+
+.hp-bar__corner:nth-child(3) {
+	top: 100%;
+	left: 0;
+	transform: translateX(-100%);
+}
+
+.hp-bar__corner:nth-child(4) {
+	top: 100%;
+	left: 100%;
+}
 
 .hp__stat {
 	align-self: flex-end;
@@ -849,6 +867,7 @@ body {
 
 /* Pokedex Entry Stats Down */
 .stats__down {
+	display: flex;
 	width: 100%;
 	height: 60%;
 }
@@ -937,6 +956,36 @@ body {
 
 .stats__stat {
 	width: 100%;
+	text-align: right;
+}
+
+.stats__type-box {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	width: 35%;
+	height: 85%;
+	margin: 16px 0 0 12%;
+	box-shadow: 2px 2px 0 2px black;
+}
+
+.type-box__txt-container {
+	width: 120%;
+	height: 24%;
+	transform: translateX(-30px);
+}
+
+.type-box__txt {
+	width: 100%;
+	text-align: center;
+}
+
+.lbl__id {
+	width: 45px;
+	height: 50%;
+	background-image: url('../imgs/stats-id-txt.png');
+	background-repeat: no-repeat;
 	text-align: right;
 }
 
