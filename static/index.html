@@ -36,11 +36,14 @@
 					<div class="screen__top-btn"></div>
 				</div>
 				<div class="screen">
-					<!-- <div class="screen__pokedex-entry general-info">
+					<div id="info-container" class="screen__pokedex-entry">
 						<div class="general-info__up">
 							<div class="entry-up__left">
 								<div id="poke-img" class="left__poke-img"></div>
-								<div id="poke-id" class="left__poke-id">No. 000</div>
+								<div class="id-container">
+									<div class="id-txt"></div>
+									<p id="poke-id"></p>
+								</div>
 							</div>
 							<div class="entry-up__right">
 								<div id="poke-name" class="up__info"></div>
@@ -134,18 +137,18 @@
 								<div id="flavor-down-arrow" class="flavor__down-arrow"></div>
 							</div>
 						</div>
-					</div> -->
-					<div class="screen__pokedex-entry stats-container">
+					</div>
+					<div id="stats-container" class="screen__pokedex-entry">
 						<div class="stats__top">
 							<div class="stats-top__left">
-								<div id="poke-img" class="stats__poke-img"></div>
-								<div class="stats__id-container">
-									<div class="stats__id-txt"></div>
-									<p id="poke-id">000</p>
+								<div id="stat-img" class="stats__poke-img"></div>
+								<div class="id-container">
+									<div class="id-txt"></div>
+									<p id="stat-id"></p>
 								</div>
 							</div>
 							<div class="stats-top__right">
-								<div id="poke-name class="stats__name">PIKACHU</div>
+								<div id="stat-name" class="stats__name"></div>
 								<div class="stats__hp-lv-container">
 									<div class="stats__level-container">
 										<div class="level-txt"></div>
@@ -171,19 +174,19 @@
 								<div class="stats-box__stats">
 									<div class="stats__stat-container">
 										<p class="stats__lbl">ATTACK</p>
-										<p id="poke-atk" class="stats__stat">55</p>
+										<p id="stat-atk" class="stats__stat"></p>
 									</div>
 									<div class="stats__stat-container">
 										<p class="stats__lbl">DEFENSE</p>
-										<p id="poke-def" class="stats__stat">40</p>
+										<p id="stat-def" class="stats__stat"></p>
 									</div>
 									<div class="stats__stat-container">
 										<p class="stats__lbl">SPEED</p>
-										<p id="poke-spd" class="stats__stat">90</p>
+										<p id="stat-spd" class="stats__stat"></p>
 									</div>
 									<div class="stats__stat-container">
 										<p class="stats__lbl">SPECIAL</p>
-										<p id="poke-spc" class="stats__stat">50</p>
+										<p id="stat-spc" class="stats__stat"></p>
 									</div>
 								</div>
 								<div class="stats-box__tl-corner"></div>
@@ -198,11 +201,11 @@
 							<div class="stats__type-box">
 								<div class="type-box__txt-container">
 									<p class="type-box__lbl">TYPE1/</p>
-									<p id="type-I" class="type-box__txt">ELECTRIC</p>
+									<p id="stat-type-I" class="type-box__txt"></p>
 								</div>
 								<div class="type-box__txt-container">
-									<p class="type-box__lbl"></p>
-									<p id="type-I" class="type-box__txt"></p>
+									<p id="stat-type-II-lbl" class="type-box__lbl"></p>
+									<p id="stat-type-II" class="type-box__txt"></p>
 								</div>
 								<div class="type-box__txt-container">
 									<div class="type-box__lbl lbl__id">/</div>

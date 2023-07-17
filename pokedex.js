@@ -24,6 +24,7 @@
 let currentPokemonName = '';
 let currentPokemonFlavor;
 let isTop = true;
+let isInfo = true;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Constants
@@ -47,6 +48,23 @@ const arrowPadLeftBtn = document.getElementById('arrow-pad-left');
 const pokeEntryDownArrow = document.getElementById('flavor-down-arrow');
 const moveRightBtn = document.getElementById('right-btn');
 const moveLeftBtn = document.getElementById('left-btn');
+const statsImg = document.getElementById('stat-img');
+const statsId = document.getElementById('stat-id');
+const statsName = document.getElementById('stat-name');
+const statsHP = document.getElementById('stat-hp');
+const statsATK = document.getElementById('stat-atk');
+const statsDEF = document.getElementById('stat-def');
+const statsSPD = document.getElementById('stat-spd');
+const statsSPC = document.getElementById('stat-spc');
+const statsTypeI = document.getElementById('stat-type-I');
+const statsTypeII = document.getElementById('stat-type-II');
+
+const HP_INDEX = 0;
+const ATK_INDEX = 1;
+const DEF_INDEX = 2;
+const SPD_INDEX = 5;
+const SPC_INDEX = 3;
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Code
@@ -74,8 +92,22 @@ arrowPadDownBtn.addEventListener('click', () => {
 	}
 });
 
+arrowPadRightBtn.addEventListener('click', () => {
+	if (isInfo) {
+		changePokedexEntry(true);
+		isInfo = false;
+	}
+});
+
+arrowPadLeftBtn.addEventListener('click', () => {
+	if (!isInfo) {
+		changePokedexEntry(false);
+		isInfo = true;
+	}
+});
+
 moveRightBtn.addEventListener('click', async () => {
-	let nextId = parseInt(pokeId.innerText.substring(4)) + 1;
+	let nextId = parseInt(pokeId.innerText) + 1;
 	if (nextId < 152)
 		changePokemonEntry(nextId);
 	pokeEntryDownArrow.classList.remove('hide');
@@ -83,7 +115,7 @@ moveRightBtn.addEventListener('click', async () => {
 });
 
 moveLeftBtn.addEventListener('click', async () => {
-	let prevId = parseInt(pokeId.innerText.substring(4)) - 1;
+	let prevId = parseInt(pokeId.innerText) - 1;
 	if (prevId > 0)
 		changePokemonEntry(prevId);
 	pokeEntryDownArrow.classList.remove('hide');
@@ -191,20 +223,24 @@ function processFlavors(flavors) {
 }
 
 function updatePokedexEntry(data) {
-	pokeId.innerText = formatId(data[0].id);
-	pokeImg.style.backgroundImage = `url(${data[0].sprite})`;
-	pokeName.innerText = data[0].name.toUpperCase();
+	let pokemon = data[0];
+	let stats = data[1];
+
+	/* Info Update */
+	pokeId.innerText = formatId(pokemon.id);
+	pokeImg.style.backgroundImage = `url(${pokemon.sprite})`;
+	pokeName.innerText = pokemon.name.toUpperCase();
 
 	// species always include a Pokémon at the end (e.g. Flame Pokemon, Seed Pokemon, etc.)
-	pokeSpecies.innerText = data[0].species.replace(' Pokémon', '').toUpperCase();
+	pokeSpecies.innerText = pokemon.species.replace(' Pokémon', '').toUpperCase();
 
 	// 1 foot = 12 inches, 1 inch = 2.54 cm. Pokeapi gives height in decimiters
-	pokeHeight.innerText = formatHeight(data[0].height);
+	pokeHeight.innerText = formatHeight(pokemon.height);
 
 	// 1 pound = 2.2046 kg .Pokeapi gives weight in hectograms
 	// it seems the coma is just decoration: https://www.youtube.com/watch?v=3npx3FFvo-I
 	// every weight is X.0 lb so i'll do it like that
-	pokeWeight.innerText = formatWeight(data[0].weight);
+	pokeWeight.innerText = formatWeight(pokemon.weight);
 
 	if (pokeName.innerText.length >= 11) pokeName.style.fontSize = '12px';
 	else pokeName.style.fontSize = '14px';
@@ -212,13 +248,29 @@ function updatePokedexEntry(data) {
 	if (pokeSpecies.innerText.length >= 11)	pokeSpecies.style.fontSize = '12px';
 	else pokeSpecies.style.fontSize = '14px';
 
-	updateFlavor(data[0].flavor);
+	updateFlavor(pokemon.flavor);
 	updateLines(currentPokemonFlavor, true);
+
+	/* Stats Update */
+	statsId.innerText = formatId(pokemon.id);
+	statsImg.style.backgroundImage = `url(${pokemon.sprite})`;
+	statsName.innerText = pokemon.name.toUpperCase();
+
+	statsHP.innerText = `${stats[HP_INDEX][0]}/ ${stats[HP_INDEX][0]}`;
+	statsATK.innerText = `${stats[ATK_INDEX][0]}`;
+	statsDEF.innerText = `${stats[DEF_INDEX][0]}`;
+	statsSPD.innerText = `${stats[SPD_INDEX][0]}`;
+	statsSPC.innerText = `${stats[SPC_INDEX][0]}`;
+
+	if (pokemon.types.length > 1) document.getElementById('stat-type-II-lbl').innerText = 'TYPE2/';
+	else document.getElementById('stat-type-II-lbl').innerText = '';
+	statsTypeI.innerText = `${pokemon.types[0].toUpperCase()}`;
+	statsTypeII.innerText = `${pokemon.types[1] || ''}`.toUpperCase();
 }
 
 function formatId(id) {
 	// equal length strings
-	let fid = 'No. ';
+	let fid = '';
 
 	if (id < 10)
 		fid += '00';
@@ -263,6 +315,16 @@ function updateLines(flavor, top) {
 		flavorLetters[i].innerText = (lines[0][i] || ' ');
 		flavorLetters[i + 18].innerText = (lines[1][i] || ' ');
 		flavorLetters[i + 36].innerText = (lines[2][i] || ' ');
+	}
+}
+
+function changePokedexEntry(toStats){
+	if (toStats) {
+		document.getElementById('info-container').style.display = 'none';
+		document.getElementById('stats-container').style.display = 'block';
+	} else {
+		document.getElementById('info-container').style.display = 'block';
+		document.getElementById('stats-container').style.display = 'none';
 	}
 }
 

@@ -725,6 +725,11 @@ body {
 }
 
 /* Pokedex Entry Stats */
+#stats-container {
+	display: none;
+}
+
+/* Pokedex Entry Stats Top*/
 .stats__top {
 	display: flex;
 	align-items: center;
@@ -732,7 +737,6 @@ body {
 	height: 40%;
 }
 
-/* Pokedex Entry Stats Top*/
 .stats-top__left {
 	display: flex;
 	flex-direction: column;
@@ -746,12 +750,12 @@ body {
 	height: 96px;
 }
 
-.stats__id-container {
+.id-container {
 	display: flex;
 	align-items: baseline;
 }
 
-.stats__id-txt {
+.id-txt {
 	width: 24px;
 	height: 10px;
 	background: no-repeat url('../imgs/id-text.png');
