@@ -833,6 +833,99 @@ body {
 	transform: translate(-100%, -50%);
 }
 
+/* Pokedex Entry Stats Down */
+.stats__down {
+	width: 100%;
+	height: 60%;
+}
+
+.stats__stats-box {
+	--local-spacing: calc(100% - 8px);
+	--local-in-spacing: calc(100% - 16px);
+
+	position: relative;
+	width: 50%;
+	height: 100%;
+}
+
+.stats-box__tl-corner,
+.stats-box__tr-corner,
+.stats-box__bl-corner,
+.stats-box__br-corner {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 8px;
+	height: 8px;
+	background-image: url('../imgs/top-left-stats-frame.png');
+}
+
+.stats-box__tr-corner {
+	left: var(--local-spacing);
+	background-image: url('../imgs/top-right-stats-frame.png');
+}
+
+.stats-box__bl-corner {
+	top: var(--local-spacing);
+	left: 0;
+	background-image: url('../imgs/bottom-left-stats-frame.png');
+}
+
+.stats-box__br-corner {
+	top: var(--local-spacing);
+	left: var(--local-spacing);
+	background-image: url('../imgs/bottom-right-stats-frame.png');
+}
+
+.stats-box__top-bar,
+.stats-box__bottom-bar {
+	position: absolute;
+	top: 0;
+	left: 8px;
+	width: calc(100% - 16px);
+	height: 8px;
+	background-image: url('../imgs/horizontal-stats-frame.png');
+}
+
+.stats-box__right-bar,
+.stats-box__left-bar {
+	position: absolute;
+	top: 8px;
+	left: calc(100% - 8px);
+	width: 8px;
+	height: calc(100% - 16px);
+	background-image: url('../imgs/vertical-stats-frame.png');
+}
+
+.stats-box__bottom-bar {
+	top: var(--local-spacing);
+}
+
+.stats-box__left-bar {
+	left: 0;
+}
+
+.stats-box__stats {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	top: 8px;
+	left: 8px;
+	width: var(--local-in-spacing);
+	height: var(--local-in-spacing);
+	padding: 1px 0;
+}
+
+.stats__lbl {
+	width: 100%;
+}
+
+.stats__stat {
+	width: 100%;
+	text-align: right;
+}
+
 /* Utilities */
 .hide {
 	display: none;
