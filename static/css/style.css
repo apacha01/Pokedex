@@ -809,10 +809,24 @@ body {
 }
 
 .hp__bar {
+	position: relative;
 	width: 75%;
 	height: 6px;
 	border: solid black 2px;
+	background-color: #606060;
 }
+
+.hp-bar__corner {
+	position: absolute;
+	width: 2px;
+	height: 2px;
+	background-color: #f8f8f8;
+}
+
+.hp-bar__corner:nth-child(1) {top: 0; left: 0; transform: translate(-100%, -100%);}
+.hp-bar__corner:nth-child(2) {top: 0; left: 100%; transform: translateY(-100%);}
+.hp-bar__corner:nth-child(3) {top: 100%; left: 0; transform: translateX(-100%);}
+.hp-bar__corner:nth-child(4) {top: 100%; left: 100%;}
 
 .hp__stat {
 	align-self: flex-end;
