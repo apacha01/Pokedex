@@ -1,27 +1,8 @@
-/**
- * Pokedex Data
- * 	N in pokedex
- *	name
- * 	Type
- * 	Species
- * 	Height
- * 	Weight
- * 	Abilities
- *  Flavor
- * 
- * Pokedex Stats
- * 	hp
- * 	atk
- * 	def
- * 	sp atk
- * 	sp def
- * 	speed
- * 	total
- */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Imports
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 import PokedataProcessor from './pokedata-processor.js';
+import PokedataFormatter from './pokedata-formatter.js';
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Variables
@@ -167,24 +148,24 @@ async function getPokemonData(pokeName) {
 }
 
 function updatePokedexEntry(data) {
-	let pokemon = data[0].getPokemon();
+	let pokemon = new PokedataFormatter(data[0].getPokemon());
 	let stats = data[1];
 
 	/* Info Update */
-	pokeId.innerText = formatId(pokemon.getId());
-	pokeImg.style.backgroundImage = `url(${pokemon.getSprite()})`;
-	pokeName.innerText = pokemon.getName().toUpperCase();
+	pokeId.innerText = pokemon.getFormattedId();
+	pokeImg.style.backgroundImage = `url(${pokemon.getFormattedSprite()})`;
+	pokeName.innerText = pokemon.getFormattedName();
 
 	// species always include a Pokémon at the end (e.g. Flame Pokemon, Seed Pokemon, etc.)
-	pokeSpecies.innerText = pokemon.getSpecies().replace(' Pokémon', '').toUpperCase();
+	pokeSpecies.innerText = pokemon.getFormattedSpecies();
 
 	// 1 foot = 12 inches, 1 inch = 2.54 cm. Pokeapi gives height in decimiters
-	pokeHeight.innerText = formatHeight(pokemon.getHeight());
+	pokeHeight.innerText = pokemon.getFormattedHeight();
 
 	// 1 pound = 2.2046 kg .Pokeapi gives weight in hectograms
 	// it seems the coma is just decoration: https://www.youtube.com/watch?v=3npx3FFvo-I
 	// every weight is X.0 lb so i'll do it like that
-	pokeWeight.innerText = formatWeight(pokemon.getWeight());
+	pokeWeight.innerText = pokemon.getFormattedWeight();
 
 	if (pokeName.innerText.length >= 11) pokeName.style.fontSize = '12px';
 	else pokeName.style.fontSize = '14px';
@@ -192,13 +173,13 @@ function updatePokedexEntry(data) {
 	if (pokeSpecies.innerText.length >= 11)	pokeSpecies.style.fontSize = '12px';
 	else pokeSpecies.style.fontSize = '14px';
 
-	updateFlavor(pokemon.getFlavor());
+	updateFlavor(pokemon.getFormattedFlavor());
 	updateLines(currentPokemonFlavor, true);
 
 	/* Stats Update */
-	statsId.innerText = formatId(pokemon.getId());
-	statsImg.style.backgroundImage = `url(${pokemon.getSprite()})`;
-	statsName.innerText = pokemon.getName().toUpperCase();
+	statsId.innerText = pokemon.getFormattedId();
+	statsImg.style.backgroundImage = `url(${pokemon.getFormattedSprite()})`;
+	statsName.innerText = pokemon.getFormattedName();
 
 	statsHP.innerText = `${stats.getHp()}/ ${stats.getHp()}`;
 	statsATK.innerText = `${stats.getAtk()}`;
@@ -206,38 +187,10 @@ function updatePokedexEntry(data) {
 	statsSPD.innerText = `${stats.getSpd()}`;
 	statsSPC.innerText = `${stats.getSpc()}`;
 
-	if (pokemon.getTypes().length > 1) document.getElementById('stat-type-II-lbl').innerText = 'TYPE2/';
+	if (pokemon.getFormattedTypes().length > 1) document.getElementById('stat-type-II-lbl').innerText = 'TYPE2/';
 	else document.getElementById('stat-type-II-lbl').innerText = '';
-	statsTypeI.innerText = `${pokemon.getTypes()[0].toUpperCase()}`;
-	statsTypeII.innerText = `${pokemon.getTypes()[1] || ''}`.toUpperCase();
-}
-
-function formatId(id) {
-	// equal length strings
-	let fid = '';
-
-	if (id < 10)
-		fid += '00';
-	else if (id < 100)
-		fid += '0';
-
-	return fid + id; 
-}
-
-function formatHeight (decimiters) {
-	let absolute = Math.round((decimiters * 10) / 2.54);
-	let foot = Math.floor(absolute / 12);
-	let inches = absolute - (foot * 12);
-
-	let height = `${foot}' `;
-	height += inches < 10 ? `0${inches}''` : `${inches}''`;
-
-	return height;
-}
-
-function formatWeight (hectograms) {
-	let weight = Math.ceil(hectograms * 0.22046);
-	return `${weight}.0 lb`;
+	statsTypeI.innerText = `${pokemon.getFormattedTypes()[0]}`;
+	statsTypeII.innerText = `${pokemon.getFormattedTypes()[1] || ''}`;
 }
 
 function updateFlavor(flavor) {
