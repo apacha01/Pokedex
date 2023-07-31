@@ -1,5 +1,3 @@
-// import Stats from './stats.js'
-
 class Pokemon {
 	#id
 	#name
@@ -11,7 +9,7 @@ class Pokemon {
 	#flavor
 	#stats
 
-	constructor(id, name, types, species, height, weight, sprite, flavor) {
+	constructor(id, name, types, species, height, weight, sprite, flavor, stats) {
 		this.#id = id;
 		this.#name = name;
 		this.#types = types;
@@ -20,6 +18,7 @@ class Pokemon {
 		this.#weight = weight;
 		this.#sprite = sprite;
 		this.#flavor = flavor;
+		this.#stats = stats;
 	}
 
 	getId() {
@@ -52,6 +51,10 @@ class Pokemon {
 
 	getFlavor() {
 		return this.#flavor;
+	}
+
+	getStats(){
+		return this.#stats;
 	}
 }
 

@@ -35,7 +35,6 @@ let isInfo = true;
 // Constants
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 const url = (poke) => 'https://pokeapi.co/api/v2/pokemon/' + (poke);
-const GBCnl = "";	// Game Boy Console new line character.
 const searchBtn = document.getElementById('search-btn');
 const searchBar = document.getElementById('search-bar');
 const loadingTxt = document.getElementById('loading-text');
@@ -63,12 +62,6 @@ const statsSPD = document.getElementById('stat-spd');
 const statsSPC = document.getElementById('stat-spc');
 const statsTypeI = document.getElementById('stat-type-I');
 const statsTypeII = document.getElementById('stat-type-II');
-
-const HP_INDEX = 0;
-const ATK_INDEX = 1;
-const DEF_INDEX = 2;
-const SPD_INDEX = 5;
-const SPC_INDEX = 3;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -169,17 +162,8 @@ async function getPokemonData(pokeName) {
 	let species = await fetch(pokemon.species.url).then((res) => res.json());
 
 	let processedData = new PokedataProcessor(pokemon, species);
-	let processedStats = processStats(pokemon);
 
-	return [processedData, processedStats];
-}
-
-function processStats(pokemonObject){
-	let stats = [];
-	pokemonObject.stats.forEach((s) => {
-		stats.push([s.base_stat, s.stat.name]);
-	});
-	return stats;
+	return [processedData, processedData.getPokemon().getStats()];
 }
 
 function updatePokedexEntry(data) {
@@ -216,11 +200,11 @@ function updatePokedexEntry(data) {
 	statsImg.style.backgroundImage = `url(${pokemon.getSprite()})`;
 	statsName.innerText = pokemon.getName().toUpperCase();
 
-	statsHP.innerText = `${stats[HP_INDEX][0]}/ ${stats[HP_INDEX][0]}`;
-	statsATK.innerText = `${stats[ATK_INDEX][0]}`;
-	statsDEF.innerText = `${stats[DEF_INDEX][0]}`;
-	statsSPD.innerText = `${stats[SPD_INDEX][0]}`;
-	statsSPC.innerText = `${stats[SPC_INDEX][0]}`;
+	statsHP.innerText = `${stats.getHp()}/ ${stats.getHp()}`;
+	statsATK.innerText = `${stats.getAtk()}`;
+	statsDEF.innerText = `${stats.getDef()}`;
+	statsSPD.innerText = `${stats.getSpd()}`;
+	statsSPC.innerText = `${stats.getSpc()}`;
 
 	if (pokemon.getTypes().length > 1) document.getElementById('stat-type-II-lbl').innerText = 'TYPE2/';
 	else document.getElementById('stat-type-II-lbl').innerText = '';
