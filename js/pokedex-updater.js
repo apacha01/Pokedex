@@ -208,9 +208,14 @@ class PokedexUpdater {
 		const flavorMid = document.getElementById('flavor__mid');
 		const flavorBottom = document.getElementById('flavor__bottom');
 
-		flavorTop.innerHTML = lines[0];
-		flavorMid.innerHTML = lines[1];
-		flavorBottom.innerHTML = lines[2];
+		try {
+			flavorTop.innerHTML = lines[0];
+			flavorMid.innerHTML = lines[1];
+			flavorBottom.innerHTML = lines[2];
+		} catch (e) {
+			console.log("Couldn't change flavor lines, check if pokedex entry is in the info section.");
+			console.log("StackTrace:", e.printStackTrace());
+		}
 	}
 }
 

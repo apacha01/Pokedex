@@ -57,6 +57,8 @@ arrowPadDownBtn.addEventListener('click', () => {
 
 arrowPadRightBtn.addEventListener('click', () => {
 	if (isInfo) {
+		document.getElementById('flavor-down-arrow').classList.remove('hide');
+		isTop = true;
 		currentUpdater.updatePokedexEntryToStats();
 		isInfo = false;
 	}
@@ -75,6 +77,7 @@ moveRightBtn.addEventListener('click', async () => {
 		changePokemonEntry(nextId);
 	pokeEntryDownArrow.classList.remove('hide');
 	isTop = true;
+	isInfo = true;
 });
 
 moveLeftBtn.addEventListener('click', async () => {
@@ -83,6 +86,7 @@ moveLeftBtn.addEventListener('click', async () => {
 		changePokemonEntry(prevId);
 	pokeEntryDownArrow.classList.remove('hide');
 	isTop = true;
+	isInfo = true;
 });
 
 async function changePokemonEntry(poke) {
