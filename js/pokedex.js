@@ -19,6 +19,11 @@
  * 	total
  */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Imports
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+import PokedataProcessor from './pokedata-processor.js';
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Variables
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 let currentPokemonName = '';
@@ -59,7 +64,7 @@ const statsSPC = document.getElementById('stat-spc');
 const statsTypeI = document.getElementById('stat-type-I');
 const statsTypeII = document.getElementById('stat-type-II');
 
-const HP_INDEX = 0
+const HP_INDEX = 0;
 const ATK_INDEX = 1;
 const DEF_INDEX = 2;
 const SPD_INDEX = 5;
@@ -132,7 +137,7 @@ async function changePokemonEntry(poke) {
 	let data = await getPokemonData(poke)
 				.then((res) => {clearInterval(dotsInterv); return res;})
 				.catch((err) => {loadingTxt.innerText = 'Error'; console.log(err);});
-	
+
 	if (data === null) {
 		loadingTxt.innerText = 'Not Found';
 		return;
@@ -144,7 +149,7 @@ async function changePokemonEntry(poke) {
 	else
 		loadingTxt.innerText = 'Ready';
 
-	currentPokemonName = data[0].name;
+	currentPokemonName = data[0].getPokemon().getName();
 	searchBar.value = currentPokemonName.charAt(0).toUpperCase() + currentPokemonName.slice(1);
 
 	updatePokedexEntry(data);
@@ -163,45 +168,10 @@ async function getPokemonData(pokeName) {
 
 	let species = await fetch(pokemon.species.url).then((res) => res.json());
 
-	let processedData = processData(pokemon, species);
+	let processedData = new PokedataProcessor(pokemon, species);
 	let processedStats = processStats(pokemon);
-	
+
 	return [processedData, processedStats];
-}
-
-function processData(pokemonObject, species) {
-	return {
-		id: pokemonObject.id,
-		name: pokemonObject.name,
-		types: processTypes(pokemonObject.types),
-		species: processSpecies(species),
-		height: parseInt(pokemonObject.height),
-		weight: parseInt(pokemonObject.weight),
-		abilities: processAbilities(pokemonObject.abilities),
-		sprite: pokemonObject.sprites.front_default,
-		flavor: processFlavors(species.flavor_text_entries),
-	}
-}
-
-function processTypes(types){
-	let processedTypes = []
-	types.forEach(t => {
-		processedTypes.push(t.type.name);
-	});
-	return processedTypes;
-}
-
-function processSpecies(species){
-	let s = species.genera.find((s) => s.language.name === 'en');
-	return s.genus;
-}
-
-function processAbilities(abilities){
-	let abs = [];
-	abilities.forEach((a) => {
-		abs.push({ability: a.ability.name, isHidden: a.is_hidden});
-	});
-	return abs;
 }
 
 function processStats(pokemonObject){
@@ -212,35 +182,25 @@ function processStats(pokemonObject){
 	return stats;
 }
 
-function processFlavors(flavors) {
-	// Red should be the first one if pokemon is in Pokemon Red, but just in case...
-	for (let i = 0; i < flavors.length; i++) {
-		if (flavors[i].language.name === 'en' && flavors[i].version.name === 'red')
-			return flavors[i].flavor_text;
-	}
-	// If pokemon is not in Pokemon Red just return the first flavor
-	return flavors[0].flavor_text;
-}
-
 function updatePokedexEntry(data) {
-	let pokemon = data[0];
+	let pokemon = data[0].getPokemon();
 	let stats = data[1];
 
 	/* Info Update */
-	pokeId.innerText = formatId(pokemon.id);
-	pokeImg.style.backgroundImage = `url(${pokemon.sprite})`;
-	pokeName.innerText = pokemon.name.toUpperCase();
+	pokeId.innerText = formatId(pokemon.getId());
+	pokeImg.style.backgroundImage = `url(${pokemon.getSprite()})`;
+	pokeName.innerText = pokemon.getName().toUpperCase();
 
 	// species always include a Pokémon at the end (e.g. Flame Pokemon, Seed Pokemon, etc.)
-	pokeSpecies.innerText = pokemon.species.replace(' Pokémon', '').toUpperCase();
+	pokeSpecies.innerText = pokemon.getSpecies().replace(' Pokémon', '').toUpperCase();
 
 	// 1 foot = 12 inches, 1 inch = 2.54 cm. Pokeapi gives height in decimiters
-	pokeHeight.innerText = formatHeight(pokemon.height);
+	pokeHeight.innerText = formatHeight(pokemon.getHeight());
 
 	// 1 pound = 2.2046 kg .Pokeapi gives weight in hectograms
 	// it seems the coma is just decoration: https://www.youtube.com/watch?v=3npx3FFvo-I
 	// every weight is X.0 lb so i'll do it like that
-	pokeWeight.innerText = formatWeight(pokemon.weight);
+	pokeWeight.innerText = formatWeight(pokemon.getWeight());
 
 	if (pokeName.innerText.length >= 11) pokeName.style.fontSize = '12px';
 	else pokeName.style.fontSize = '14px';
@@ -248,13 +208,13 @@ function updatePokedexEntry(data) {
 	if (pokeSpecies.innerText.length >= 11)	pokeSpecies.style.fontSize = '12px';
 	else pokeSpecies.style.fontSize = '14px';
 
-	updateFlavor(pokemon.flavor);
+	updateFlavor(pokemon.getFlavor());
 	updateLines(currentPokemonFlavor, true);
 
 	/* Stats Update */
-	statsId.innerText = formatId(pokemon.id);
-	statsImg.style.backgroundImage = `url(${pokemon.sprite})`;
-	statsName.innerText = pokemon.name.toUpperCase();
+	statsId.innerText = formatId(pokemon.getId());
+	statsImg.style.backgroundImage = `url(${pokemon.getSprite()})`;
+	statsName.innerText = pokemon.getName().toUpperCase();
 
 	statsHP.innerText = `${stats[HP_INDEX][0]}/ ${stats[HP_INDEX][0]}`;
 	statsATK.innerText = `${stats[ATK_INDEX][0]}`;
@@ -262,10 +222,10 @@ function updatePokedexEntry(data) {
 	statsSPD.innerText = `${stats[SPD_INDEX][0]}`;
 	statsSPC.innerText = `${stats[SPC_INDEX][0]}`;
 
-	if (pokemon.types.length > 1) document.getElementById('stat-type-II-lbl').innerText = 'TYPE2/';
+	if (pokemon.getTypes().length > 1) document.getElementById('stat-type-II-lbl').innerText = 'TYPE2/';
 	else document.getElementById('stat-type-II-lbl').innerText = '';
-	statsTypeI.innerText = `${pokemon.types[0].toUpperCase()}`;
-	statsTypeII.innerText = `${pokemon.types[1] || ''}`.toUpperCase();
+	statsTypeI.innerText = `${pokemon.getTypes()[0].toUpperCase()}`;
+	statsTypeII.innerText = `${pokemon.getTypes()[1] || ''}`.toUpperCase();
 }
 
 function formatId(id) {
@@ -297,13 +257,8 @@ function formatWeight (hectograms) {
 }
 
 function updateFlavor(flavor) {
-	let flavorTop = flavor.substring(0, flavor.indexOf(GBCnl));
-	let flavorBottom = flavor.substring(flavor.indexOf(GBCnl) + 1, flavor.length);
-
-	let topLines = flavorTop.split('\n');
-	let bottomLines = flavorBottom.split('\n');
-
-	currentPokemonFlavor = [topLines, bottomLines];
+	let lines = flavor.split('\n');
+	currentPokemonFlavor = [[lines[0], lines[1], lines[2]], [lines[3], lines[4], lines[5]]];
 }
 
 function updateLines(flavor, top) {
