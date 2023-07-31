@@ -3,6 +3,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 import PokedataProcessor from './pokedata-processor.js';
 import PokedataFormatter from './pokedata-formatter.js';
+import PokedexUpdater from './pokedex-updater.js';
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Variables
@@ -149,48 +150,14 @@ async function getPokemonData(pokeName) {
 
 function updatePokedexEntry(data) {
 	let pokemon = new PokedataFormatter(data[0].getPokemon());
+	let updater = new PokedexUpdater(pokemon);
 	let stats = data[1];
 
 	/* Info Update */
-	pokeId.innerText = pokemon.getFormattedId();
-	pokeImg.style.backgroundImage = `url(${pokemon.getFormattedSprite()})`;
-	pokeName.innerText = pokemon.getFormattedName();
-
-	// species always include a Pokémon at the end (e.g. Flame Pokemon, Seed Pokemon, etc.)
-	pokeSpecies.innerText = pokemon.getFormattedSpecies();
-
-	// 1 foot = 12 inches, 1 inch = 2.54 cm. Pokeapi gives height in decimiters
-	pokeHeight.innerText = pokemon.getFormattedHeight();
-
-	// 1 pound = 2.2046 kg .Pokeapi gives weight in hectograms
-	// it seems the coma is just decoration: https://www.youtube.com/watch?v=3npx3FFvo-I
-	// every weight is X.0 lb so i'll do it like that
-	pokeWeight.innerText = pokemon.getFormattedWeight();
-
-	if (pokeName.innerText.length >= 11) pokeName.style.fontSize = '12px';
-	else pokeName.style.fontSize = '14px';
-
-	if (pokeSpecies.innerText.length >= 11)	pokeSpecies.style.fontSize = '12px';
-	else pokeSpecies.style.fontSize = '14px';
-
-	updateFlavor(pokemon.getFormattedFlavor());
-	updateLines(currentPokemonFlavor, true);
+	updater.updatePokedexEntryToInfo();
 
 	/* Stats Update */
-	statsId.innerText = pokemon.getFormattedId();
-	statsImg.style.backgroundImage = `url(${pokemon.getFormattedSprite()})`;
-	statsName.innerText = pokemon.getFormattedName();
-
-	statsHP.innerText = `${stats.getHp()}/ ${stats.getHp()}`;
-	statsATK.innerText = `${stats.getAtk()}`;
-	statsDEF.innerText = `${stats.getDef()}`;
-	statsSPD.innerText = `${stats.getSpd()}`;
-	statsSPC.innerText = `${stats.getSpc()}`;
-
-	if (pokemon.getFormattedTypes().length > 1) document.getElementById('stat-type-II-lbl').innerText = 'TYPE2/';
-	else document.getElementById('stat-type-II-lbl').innerText = '';
-	statsTypeI.innerText = `${pokemon.getFormattedTypes()[0]}`;
-	statsTypeII.innerText = `${pokemon.getFormattedTypes()[1] || ''}`;
+	
 }
 
 function updateFlavor(flavor) {
