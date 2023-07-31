@@ -59,7 +59,7 @@ const statsSPC = document.getElementById('stat-spc');
 const statsTypeI = document.getElementById('stat-type-I');
 const statsTypeII = document.getElementById('stat-type-II');
 
-const HP_INDEX = 0;
+const HP_INDEX = 0
 const ATK_INDEX = 1;
 const DEF_INDEX = 2;
 const SPD_INDEX = 5;
