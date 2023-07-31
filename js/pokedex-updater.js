@@ -9,7 +9,8 @@ class PokedexUpdater {
 	constructor(pokemonFormatter) {
 		this.#pokeFormatter = pokemonFormatter;
 		this.#screenTag = document.getElementById('screen');
-		this.#setInfoComponent(this.#obtainInfoHtml());
+		this.#infoComponent = this.#obtainInfoHtml();
+		this.#statsComponent = this.#obtainStatsHtml();
 	}
 
 	updatePokedexEntryToInfo() {
@@ -18,6 +19,8 @@ class PokedexUpdater {
 	}
 
 	updatePokedexEntryToStats() {
+		this.#setStatsComponent(this.#obtainStatsHtml());
+		this.#screenTag.innerHTML = this.#statsComponent;
 	}
 
 	#setInfoComponent(content) {
@@ -26,91 +29,6 @@ class PokedexUpdater {
 
 	#setStatsComponent(content) {
 		this.#statsComponent = content;
-	}
-
-	#obtainStatsHtml(pokemonFormatter) {
-		let c = `
-		<div id="stats-container" class="screen__pokedex-entry">
-			<div class="stats__top">
-				<div class="stats-top__left">
-					<div id="stat-img" class="stats__poke-img"></div>
-					<div class="id-container">
-						<div class="id-txt"></div>
-						<p id="stat-id"></p>
-					</div>
-				</div>
-				<div class="stats-top__right">
-					<div id="stat-name" class="stats__name"></div>
-					<div class="stats__hp-lv-container">
-						<div class="stats__level-container">
-							<div class="level-txt"></div>
-							<p class="level">1</p>
-						</div>
-						<div class="stats__hp-container">
-							<div class="hp__tag"></div>
-							<div class="hp__bar">
-								<div class="hp-bar__corner"></div>
-								<div class="hp-bar__corner"></div>
-								<div class="hp-bar__corner"></div>
-								<div class="hp-bar__corner"></div>
-							</div>
-						</div>
-						<div id="stat-hp" class="hp__stat">35/ 35</div>
-					</div>
-					<div class="stats__state">STATUS/OK</div>
-					<div class="stats__half-arrow"></div>
-				</div>
-			</div>
-			<div class="stats__down">
-				<div class="stats__stats-box">
-					<div class="stats-box__stats">
-						<div class="stats__stat-container">
-							<p class="stats__lbl">ATTACK</p>
-							<p id="stat-atk" class="stats__stat"></p>
-						</div>
-						<div class="stats__stat-container">
-							<p class="stats__lbl">DEFENSE</p>
-							<p id="stat-def" class="stats__stat"></p>
-						</div>
-						<div class="stats__stat-container">
-							<p class="stats__lbl">SPEED</p>
-							<p id="stat-spd" class="stats__stat"></p>
-						</div>
-						<div class="stats__stat-container">
-							<p class="stats__lbl">SPECIAL</p>
-							<p id="stat-spc" class="stats__stat"></p>
-						</div>
-					</div>
-					<div class="stats-box__tl-corner"></div>
-					<div class="stats-box__top-bar"></div>
-					<div class="stats-box__tr-corner"></div>
-					<div class="stats-box__right-bar"></div>
-					<div class="stats-box__br-corner"></div>
-					<div class="stats-box__bottom-bar"></div>
-					<div class="stats-box__bl-corner"></div>
-					<div class="stats-box__left-bar"></div>
-				</div>
-				<div class="stats__type-box">
-					<div class="type-box__txt-container">
-						<p class="type-box__lbl">TYPE1/</p>
-						<p id="stat-type-I" class="type-box__txt"></p>
-					</div>
-					<div class="type-box__txt-container">
-						<p id="stat-type-II-lbl" class="type-box__lbl"></p>
-						<p id="stat-type-II" class="type-box__txt"></p>
-					</div>
-					<div class="type-box__txt-container">
-						<div class="type-box__lbl lbl__id">/</div>
-						<p class="type-box__txt">???</p>
-					</div>
-					<div class="type-box__txt-container">
-						<p class="type-box__lbl">OT/</p>
-						<p class="type-box__txt">RED</p>
-					</div>
-					<div class="stats__half-arrow"></div>
-				</div>
-			</div>
-		</div>`;
 	}
 
 	#obtainInfoHtml() {
@@ -153,13 +71,13 @@ class PokedexUpdater {
 				</div>
 			</div>
 			<div class="general-info__down">
-				<div id="flavor__up" class="down__flavor">
+				<div id="flavor__top" class="down__flavor">
 					${lines[0]}
 				</div>
 				<div id="flavor__mid" class="down__flavor">
 					${lines[1]}
 				</div>
-				<div id="flavor__down" class="down__flavor">
+				<div id="flavor__bottom" class="down__flavor">
 					${lines[2]}
 				</div>
 				<div class="flavor__arrow-container">
@@ -167,6 +85,107 @@ class PokedexUpdater {
 				</div>
 			</div>
 		</div>`;
+	}
+
+	#obtainStatsHtml() {
+		let type2 = this.#obtainHtmlTypeII();
+		return `
+		<div class="screen__pokedex-entry">
+			<div class="stats__top">
+				<div class="stats-top__left">
+					<div class="stats__poke-img" style="background-image: url(${this.#pokeFormatter.getFormattedSprite()}"></div>
+					<div class="id-container">
+						<div class="id-txt"></div>
+						<p>${this.#pokeFormatter.getFormattedId()}</p>
+					</div>
+				</div>
+				<div class="stats-top__right">
+					<div class="stats__name">${this.#pokeFormatter.getFormattedName()}</div>
+					<div class="stats__hp-lv-container">
+						<div class="stats__level-container">
+							<div class="level-txt"></div>
+							<p class="level">1</p>
+						</div>
+						<div class="stats__hp-container">
+							<div class="hp__tag"></div>
+							<div class="hp__bar">
+								<div class="hp-bar__corner"></div>
+								<div class="hp-bar__corner"></div>
+								<div class="hp-bar__corner"></div>
+								<div class="hp-bar__corner"></div>
+							</div>
+						</div>
+						<div class="hp__stat">${this.#pokeFormatter.getFormattedHp()}</div>
+					</div>
+					<div class="stats__state">STATUS/OK</div>
+					<div class="stats__half-arrow"></div>
+				</div>
+			</div>
+			<div class="stats__down">
+				<div class="stats__stats-box">
+					<div class="stats-box__stats">
+						<div class="stats__stat-container">
+							<p class="stats__lbl">ATTACK</p>
+							<p class="stats__stat">${this.#pokeFormatter.getFormattedAtk()}</p>
+						</div>
+						<div class="stats__stat-container">
+							<p class="stats__lbl">DEFENSE</p>
+							<p class="stats__stat">${this.#pokeFormatter.getFormattedDef()}</p>
+						</div>
+						<div class="stats__stat-container">
+							<p class="stats__lbl">SPEED</p>
+							<p class="stats__stat">${this.#pokeFormatter.getFormattedSpd()}</p>
+						</div>
+						<div class="stats__stat-container">
+							<p class="stats__lbl">SPECIAL</p>
+							<p class="stats__stat">${this.#pokeFormatter.getFormattedSpc()}</p>
+						</div>
+					</div>
+					<div class="stats-box__tl-corner"></div>
+					<div class="stats-box__top-bar"></div>
+					<div class="stats-box__tr-corner"></div>
+					<div class="stats-box__right-bar"></div>
+					<div class="stats-box__br-corner"></div>
+					<div class="stats-box__bottom-bar"></div>
+					<div class="stats-box__bl-corner"></div>
+					<div class="stats-box__left-bar"></div>
+				</div>
+				<div class="stats__type-box">
+					<div class="type-box__txt-container">
+						<p class="type-box__lbl">TYPE1/</p>
+						<p class="type-box__txt">${this.#pokeFormatter.getFormattedTypes()[0]}</p>
+					</div>
+					<div class="type-box__txt-container">
+						${type2}
+					</div>
+					<div class="type-box__txt-container">
+						<div class="type-box__lbl lbl__id">/</div>
+						<p class="type-box__txt">???</p>
+					</div>
+					<div class="type-box__txt-container">
+						<p class="type-box__lbl">OT/</p>
+						<p class="type-box__txt">RED</p>
+					</div>
+					<div class="stats__half-arrow"></div>
+				</div>
+			</div>
+		</div>`;
+	}
+
+	#obtainHtmlTypeII() {
+		let html = (lbl, txt) => `
+			<p id="stat-type-II-lbl" class="type-box__lbl">${lbl}</p>
+			<p id="stat-type-II" class="type-box__txt">${txt}</p>
+		`;
+		let lbl = "TYPE2/";
+		let txt = this.#pokeFormatter.getFormattedTypes()[1];
+
+		if (this.#pokeFormatter.getFormattedTypes().length === 1) {
+			lbl = '';
+			txt = '';
+		}
+
+		return html(lbl, txt);
 	}
 
 	#obtainFlavorHtmlLines(isTop) {
@@ -181,6 +200,17 @@ class PokedexUpdater {
 		}
 
 		return lines;
+	}
+
+	updateFlavorLines(isTop) {
+		let lines = this.#obtainFlavorHtmlLines(isTop);
+		const flavorTop = document.getElementById('flavor__top');
+		const flavorMid = document.getElementById('flavor__mid');
+		const flavorBottom = document.getElementById('flavor__bottom');
+
+		flavorTop.innerHTML = lines[0];
+		flavorMid.innerHTML = lines[1];
+		flavorBottom.innerHTML = lines[2];
 	}
 }
 
