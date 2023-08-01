@@ -35,6 +35,8 @@ const moveLeftBtn = document.getElementById('left-btn');
 searchBtn.addEventListener('click', async () => {
 	let poke = searchBar.value.toLowerCase();
 	if (poke === currentPokemon.getName()) return;
+	isTop = true;
+	isInfo = true;
 
 	changePokemonEntry(poke);
 });
@@ -145,7 +147,7 @@ function isDataValid(data) {
 	else {
 		loadingTxt.innerText = 'Ready';
 	}
-	
+
 	return true;
 }
 
