@@ -42,7 +42,18 @@ class PokedataFormatter {
 	 * @returns {string} string of the species name without the "Pokémon" sufix.
 	 */
 	getFormattedSpecies() {
-		return this.#pokemon.getSpecies().replace(' Pokémon', '').toUpperCase();
+		let sp = this.#pokemon.getSpecies().replace(' Pokémon', '').toUpperCase();
+
+		// PokeApi gives some species with spaces in between that weren't in the original game
+		// Mew special case (not "species" but "specie")
+		if (sp.length >= 11 && sp != 'NEW SPECIES') {
+			sp = sp.replace(' ', '');
+		}
+		else {
+			sp = sp.substring(0, 10);
+		}
+		
+		return sp;
 	}
 
 	/**
