@@ -1,6 +1,8 @@
 # Pokedex
 Pokedex made with HTML, CSS and JavaScript using the pokeapi v2.
 
-# In process
-Master branch currently done without classes and in single file.
-Following https://roadmap.sh/javascript i'm done with Web API's. Once i study classes an updated (and way better) version will be available.
+## Branches
+master branch currently done without classes and in single file.
+classes branch is the project divided into files with classes, using modules and documented. This is the a way better version.
+
+#### The most professional project i made up to august 1st 2023
