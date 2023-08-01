@@ -24,7 +24,6 @@ const arrowPadUpBtn = document.getElementById('arrow-pad-up');
 const arrowPadRightBtn = document.getElementById('arrow-pad-right');
 const arrowPadDownBtn = document.getElementById('arrow-pad-down');
 const arrowPadLeftBtn = document.getElementById('arrow-pad-left');
-const pokeEntryDownArrow = document.getElementById('flavor-down-arrow');
 const moveRightBtn = document.getElementById('right-btn');
 const moveLeftBtn = document.getElementById('left-btn');
 
