@@ -12,7 +12,7 @@ class PokedataProcessor {
 
 	/**
 	 * Process the raw data given by the PokeApi and returns a pokemon object with that data.
-	 * @param {JSON} rawPokemon raw JSON response from the PokeApi containing the pokemon data. 
+	 * @param {JSON} rawPokemon raw JSON response from the PokeApi containing the pokemon data.
 	 * @param {JSON} rawSpecies raw JSON response from the PokeApi containing the species of the pokemon data.
 	 * @returns {Pokemon} pokemon object that results from processing the raw data.
 	 */
@@ -51,18 +51,18 @@ class PokedataProcessor {
 
 	/**
 	 * Process the raw data of the pokemon species given by the PokeApi and returns the flavor of the original Pokemon Red game in english.
-	 * If pokemon is not on Pokemon Red it just returns the first flavor found in english. 
+	 * If pokemon is not on Pokemon Red it just returns the first flavor found in english.
 	 * @param {JSON} species raw JSON response from the PokeApi containing the species of the pokemon data.
 	 * @returns {string} string with the flavor in english.
 	 */
 	#processFlavor(species) {
 		// Find pokemon red english flavor or return the first one in english 
 		let speciesFlavor;
-		
+
 		// (red should be the first one if pokemon is in Pokemon Red, but just in case...)
 		try {
 			speciesFlavor = species.flavor_text_entries.find(
-				s => s.language.name === 'en' && s.version.name === 'red').flavor_text;	
+				s => s.language.name === 'en' && s.version.name === 'red').flavor_text;
 		} catch (e) {
 			speciesFlavor = species.flavor_text_entries.filter(
 				s => s.language.name === 'en')[0].flavor_text;
