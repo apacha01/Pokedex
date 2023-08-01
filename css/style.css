@@ -607,7 +607,6 @@ body {
 }
 
 .left__poke-img {
-	background-image: url("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png");
 	aspect-ratio: 1 / 1;
 	min-width: 96px;
 }
