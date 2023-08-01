@@ -57,10 +57,17 @@ class PokedataProcessor {
 	 */
 	#processFlavor(species) {
 		// Find pokemon red english flavor or return the first one in english 
+		let speciesFlavor;
+		
 		// (red should be the first one if pokemon is in Pokemon Red, but just in case...)
-		let speciesFlavor = species.flavor_text_entries.find(
-			s => s.language.name === 'en' && s.version.name === 'red').flavor_text
-			|| species.flavor_text_entries.find(s => s.language.name === 'en')[0].flavor_text;
+		try {
+			speciesFlavor = species.flavor_text_entries.find(
+				s => s.language.name === 'en' && s.version.name === 'red').flavor_text;	
+		} catch (e) {
+			speciesFlavor = species.flavor_text_entries.filter(
+				s => s.language.name === 'en')[0].flavor_text;
+		}
+
 		return speciesFlavor.replace(GBCnl, '\n');
 	}
 
