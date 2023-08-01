@@ -13,24 +13,42 @@ class PokedexUpdater {
 		this.#statsComponent = this.#obtainStatsHtml();
 	}
 
+	/**
+	 * Updates the screen on pokedex to the Info section
+	 */
 	updatePokedexEntryToInfo() {
 		this.#setInfoComponent(this.#obtainInfoHtml());
 		this.#screenTag.innerHTML = this.#infoComponent;
 	}
 
+	/**
+	 * Updates the screen on pokedex to the Stats section
+	 */
 	updatePokedexEntryToStats() {
 		this.#setStatsComponent(this.#obtainStatsHtml());
 		this.#screenTag.innerHTML = this.#statsComponent;
 	}
 
+	/**
+	 * Setter for infoComponent.
+	 * @param {string} content string of the html to set #infoComponent to.
+	 */
 	#setInfoComponent(content) {
 		this.#infoComponent = content;
 	}
 
+	/**
+	 * Setter for statsComponent.
+	 * @param {string} content string of the html to set #statsComponent to.
+	 */
 	#setStatsComponent(content) {
 		this.#statsComponent = content;
 	}
 
+	/**
+	 * Makes the html string for the inner part of the screen tag with the pokemon info.
+	 * @returns {string} html string of the content for #infoComponent.
+	 */
 	#obtainInfoHtml() {
 		let lines = this.#obtainFlavorHtmlLines(true);
 		return `
@@ -87,6 +105,10 @@ class PokedexUpdater {
 		</div>`;
 	}
 
+	/**
+	 * Makes the html string for the inner part of the screen tag with the pokemon stats info.
+	 * @returns {string} html string of the content for #statsComponent.
+	 */
 	#obtainStatsHtml() {
 		let type2 = this.#obtainHtmlTypeII();
 		return `
@@ -172,25 +194,34 @@ class PokedexUpdater {
 		</div>`;
 	}
 
+	/**
+	 * Makes the html string with the types acording to the amount of types the pokemon has.
+	 * @returns {string} html string for the types depending on the amount.
+	 */
 	#obtainHtmlTypeII() {
 		let html = (lbl, txt) => `
 			<p id="stat-type-II-lbl" class="type-box__lbl">${lbl}</p>
 			<p id="stat-type-II" class="type-box__txt">${txt}</p>
 		`;
-		let lbl = "TYPE2/";
-		let txt = this.#pokeFormatter.getFormattedTypes()[1];
+		let lbl = '';
+		let txt = '';
 
-		if (this.#pokeFormatter.getFormattedTypes().length === 1) {
-			lbl = '';
-			txt = '';
+		if (this.#pokeFormatter.getFormattedTypes().length > 1) {
+			lbl = "TYPE2/";
+			txt = this.#pokeFormatter.getFormattedTypes()[1];
 		}
 
 		return html(lbl, txt);
 	}
 
+	/**
+	 * Makes the html string with the flavor lines of top or bottom part and the letters html.
+	 * @param {boolean} isTop whether to get the lines of the top entry or the bottom entry.
+	 * @returns {array} array of html strings of the flavor letters. Each index is a line.
+	 */
 	#obtainFlavorHtmlLines(isTop) {
 		let flavorLines = this.#pokeFormatter.getFormattedFlavor().split('\n');
-		let lines = [[], [], []];
+		let lines = ['', '', ''];
 		let index = isTop ? 0 : 3;
 
 		for (let i = 0; i < 18; i++) {
@@ -202,6 +233,10 @@ class PokedexUpdater {
 		return lines;
 	}
 
+	/**
+	 * Updates the flavor lines on the pokedex screen to top/bottom.
+	 * @param {boolean} isTop  whether to update the lines of to the top entry or to the bottom entry.
+	 */
 	updateFlavorLines(isTop) {
 		let lines = this.#obtainFlavorHtmlLines(isTop);
 		const flavorTop = document.getElementById('flavor__top');
