@@ -214,7 +214,7 @@ class PokedexUpdater {
 			flavorBottom.innerHTML = lines[2];
 		} catch (e) {
 			console.log("Couldn't change flavor lines, check if pokedex entry is in the info section.");
-			console.log("StackTrace:", e.printStackTrace());
+			console.log("StackTrace:", e);
 		}
 	}
 }

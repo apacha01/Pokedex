@@ -40,7 +40,7 @@ searchBtn.addEventListener('click', async () => {
 });
 
 arrowPadUpBtn.addEventListener('click', () => {
-	if (!isTop) {
+	if (!isTop && isInfo) {
 		currentUpdater.updateFlavorLines(true);
 		document.getElementById('flavor-down-arrow').classList.remove('hide');
 		isTop = true;
@@ -48,7 +48,7 @@ arrowPadUpBtn.addEventListener('click', () => {
 });
 
 arrowPadDownBtn.addEventListener('click', () => {
-	if (isTop) {
+	if (isTop && isInfo) {
 		currentUpdater.updateFlavorLines(false);
 		document.getElementById('flavor-down-arrow').classList.add('hide');
 		isTop = false;
@@ -59,6 +59,7 @@ arrowPadRightBtn.addEventListener('click', () => {
 	if (isInfo) {
 		document.getElementById('flavor-down-arrow').classList.remove('hide');
 		isTop = true;
+
 		currentUpdater.updatePokedexEntryToStats();
 		isInfo = false;
 	}
@@ -75,7 +76,6 @@ moveRightBtn.addEventListener('click', async () => {
 	let nextId = parseInt(currentPokemon.getId()) + 1;
 	if (nextId < 152)
 		changePokemonEntry(nextId);
-	pokeEntryDownArrow.classList.remove('hide');
 	isTop = true;
 	isInfo = true;
 });
@@ -84,32 +84,19 @@ moveLeftBtn.addEventListener('click', async () => {
 	let prevId = parseInt(currentPokemon.getId()) - 1;
 	if (prevId > 0)
 		changePokemonEntry(prevId);
-	pokeEntryDownArrow.classList.remove('hide');
 	isTop = true;
 	isInfo = true;
 });
 
 async function changePokemonEntry(poke) {
-	loadingTxt.innerText = 'Loading';
-	let dotsInterv = setInterval(() => {
-		if(loadingTxt.innerText.length === 13) loadingTxt.innerText = 'Loading';
-		loadingTxt.innerText += ' .';
-	}, 250);
-
+	let dotsInterv = startLoadingText();
 	let data = await getPokemonData(poke)
 				.then((res) => {clearInterval(dotsInterv); return res;})
 				.catch((err) => {loadingTxt.innerText = 'Error'; console.log(err);});
 
-	if (data === null || data === undefined) {
-		loadingTxt.innerText = 'Not Found';
+	if (!isDataValid(data)) {
 		return;
 	}
-	else if (data.getPokemon().getId() >= 152) {
-		loadingTxt.innerText = 'Not Gen I';
-		return;
-	}
-	else
-		loadingTxt.innerText = 'Ready';
 
 	currentPokemon = data.getPokemon();
 	currentUpdater = new PokedexUpdater(new PokedataFormatter(currentPokemon));
@@ -134,6 +121,32 @@ async function getPokemonData(pokeName) {
 	let processedData = new PokedataProcessor(pokemon, species);
 
 	return processedData;
+}
+
+function startLoadingText() {
+	loadingTxt.innerText = 'Loading';
+	let dotsInterv = setInterval(() => {
+		if(loadingTxt.innerText.length === 13) loadingTxt.innerText = 'Loading';
+		loadingTxt.innerText += ' .';
+	}, 250);
+
+	return dotsInterv;
+}
+
+function isDataValid(data) {
+	if (data === null || data === undefined) {
+		loadingTxt.innerText = 'Not Found';
+		return false;
+	}
+	else if (data.getPokemon().getId() >= 152) {
+		loadingTxt.innerText = 'Not Gen I';
+		return false;
+	}
+	else {
+		loadingTxt.innerText = 'Ready';
+	}
+	
+	return true;
 }
 
 // Start with pikachu
