@@ -31,6 +31,9 @@ const moveLeftBtn = document.getElementById('left-btn');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Code
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * Searches the pokemon written in the search bar and updates the pokedex entry.
+ */
 searchBtn.addEventListener('click', async () => {
 	let poke = searchBar.value.toLowerCase();
 	if (poke === currentPokemon.getName()) return;
@@ -40,6 +43,9 @@ searchBtn.addEventListener('click', async () => {
 	changePokemonEntry(poke);
 });
 
+/**
+ * Changes flavor lines (if possible) to the top lines.
+ */
 arrowPadUpBtn.addEventListener('click', () => {
 	if (!isTop && isInfo) {
 		currentUpdater.updateFlavorLines(true);
@@ -48,6 +54,9 @@ arrowPadUpBtn.addEventListener('click', () => {
 	}
 });
 
+/**
+ * Changes flavor lines (if possible) to the bottom lines.
+ */
 arrowPadDownBtn.addEventListener('click', () => {
 	if (isTop && isInfo) {
 		currentUpdater.updateFlavorLines(false);
@@ -56,6 +65,9 @@ arrowPadDownBtn.addEventListener('click', () => {
 	}
 });
 
+/**
+ * Changes from info to stats component.
+ */
 arrowPadRightBtn.addEventListener('click', () => {
 	if (isInfo) {
 		document.getElementById('flavor-down-arrow').classList.remove('hide');
@@ -66,6 +78,9 @@ arrowPadRightBtn.addEventListener('click', () => {
 	}
 });
 
+/**
+ * Changes from stats to info component.
+ */
 arrowPadLeftBtn.addEventListener('click', () => {
 	if (!isInfo) {
 		currentUpdater.updatePokedexEntryToInfo();
@@ -73,6 +88,9 @@ arrowPadLeftBtn.addEventListener('click', () => {
 	}
 });
 
+/**
+ * Changes to the next pokemon and resets the views (to the info component and top lines of flavor).
+ */
 moveRightBtn.addEventListener('click', async () => {
 	let nextId = parseInt(currentPokemon.getId()) + 1;
 	if (nextId < 152)
@@ -81,6 +99,9 @@ moveRightBtn.addEventListener('click', async () => {
 	isInfo = true;
 });
 
+/**
+ * Changes to the previous pokemon and resets the views (to the info component and top lines of flavor).
+ */
 moveLeftBtn.addEventListener('click', async () => {
 	let prevId = parseInt(currentPokemon.getId()) - 1;
 	if (prevId > 0)
@@ -89,9 +110,14 @@ moveLeftBtn.addEventListener('click', async () => {
 	isInfo = true;
 });
 
+/**
+ * Changes the pokedex entry to the pokemon passed as parameter.
+ * If pokemon is no in Gen I doesn't update.
+ * @param {string} poke pokemon name to search with PokeApi.
+ */
 async function changePokemonEntry(poke) {
 	let dotsInterv = startLoadingText();
-	let data = await getPokemonData(poke)
+	let data = await requestPokemonData(poke)
 				.then((res) => {clearInterval(dotsInterv); return res;})
 				.catch((err) => {loadingTxt.innerText = 'Error'; console.log(err);});
 
@@ -106,7 +132,12 @@ async function changePokemonEntry(poke) {
 	currentUpdater.updatePokedexEntryToInfo();
 }
 
-async function getPokemonData(pokeName) {
+/**
+ * Requests pokemon data to the PokeApi for the pokemon and the species of that pokemon (so 2 requests).
+ * @param {string} pokeName string of the pokemon name to request to the PokeApi. 
+ * @returns {Pokemon | null} a pokemon object with the processed data from the raw data of the PokeApi. Returns null if pokemon wasn't found. 
+ */
+async function requestPokemonData(pokeName) {
 	let pokemon = await fetch(url(pokeName)).then((res) => {
 		if (res.ok)	return res.json();
 		else {
@@ -124,6 +155,10 @@ async function getPokemonData(pokeName) {
 	return processedData;
 }
 
+/**
+ * Starts the triple dots loading text animation in the screen under pokedex.
+ * @returns {number} return value of the setInterval function (ID used to close the interval).
+ */
 function startLoadingText() {
 	loadingTxt.innerText = 'Loading';
 	let dotsInterv = setInterval(() => {
@@ -134,6 +169,11 @@ function startLoadingText() {
 	return dotsInterv;
 }
 
+/**
+ * Checks if request data of the pokemon obtained is valid or if it's within Gen I. 
+ * @param {JSON} data raw data from the PokeApi.
+ * @returns {boolean} true if valid, false otherwise.
+ */
 function isDataValid(data) {
 	if (data === null || data === undefined) {
 		loadingTxt.innerText = 'Not Found';
