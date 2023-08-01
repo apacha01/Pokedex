@@ -12,6 +12,7 @@ let currentPokemon;
 let currentUpdater;
 let isTop = true;
 let isInfo = true;
+let isMuted = false;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Constants
@@ -26,6 +27,7 @@ const arrowPadDownBtn = document.getElementById('arrow-pad-down');
 const arrowPadLeftBtn = document.getElementById('arrow-pad-left');
 const moveRightBtn = document.getElementById('right-btn');
 const moveLeftBtn = document.getElementById('left-btn');
+const toggleBgMusic = document.getElementById('mute-bg-music');
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -108,6 +110,22 @@ moveLeftBtn.addEventListener('click', async () => {
 		changePokemonEntry(prevId);
 	isTop = true;
 	isInfo = true;
+});
+
+/**
+ * Toggles the background music sound.
+ */
+toggleBgMusic.addEventListener('click', () => {
+	if (!isMuted) {
+		toggleBgMusic.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+		document.getElementById('bg-music').muted = true;
+		isMuted = true;
+	}
+	else {
+		toggleBgMusic.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
+		document.getElementById('bg-music').muted = false;
+		isMuted = false;
+	}
 });
 
 /**

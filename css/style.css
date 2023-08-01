@@ -26,6 +26,13 @@ body {
 	margin-top: 10px;
 }
 
+.mute {
+	position: absolute;
+	top: 15px;
+	right: 25px;
+	color: black;
+}
+
 /* Pokedex */
 .pokedex-container {
 	width: 100%;
