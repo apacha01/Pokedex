@@ -645,7 +645,7 @@ body {
 .mid__square-containers {
 	position: absolute;
 	display: flex;
-	justify-content: space-evenly;
+	justify-content: space-around;
 	width: 45%;
 	height: 10px;
 	top: -50%;
