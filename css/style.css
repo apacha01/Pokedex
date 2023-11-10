@@ -2,6 +2,7 @@
 :root {
 	--pokered: #E4000F;
 	--bg-color: wheat;
+	font-size: 24px;
 }
 
 /* Fonts */
@@ -48,9 +49,9 @@ body {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	width: 400px;
-	height: 90vh;
-	min-width: 400px;
+	width: 14.3rem;
+	height: 23.25rem;
+	min-width: 14.3rem;
 	background-color: var(--pokered);
 	border-top-left-radius: 40px;
 	border-bottom-left-radius: 40px;
@@ -71,7 +72,7 @@ body {
 	width: 50%;
 	height: 80%;
 	background-color: #8A0009;
-	border-bottom-right-radius: 40px;
+	border-bottom-right-radius: 2rem;
 	border-top-left-radius: 40px;
 	box-shadow: -2px 8px 0px -1px #600707;
 }
@@ -86,11 +87,11 @@ body {
 
 .left__top-curve {
 	position: absolute;
-	width: 51.4%;
+	width: 53%;
 	height: 50%;
 	background-color: var(--pokered);
-	border-top-left-radius: 40px;
-	margin-left: 48.6%;
+	border-top-left-radius: 2rem;
+	margin-left: 47%;
 	margin-top: 10%;
 }
 
@@ -144,7 +145,7 @@ body {
 	flex-direction: column;
 	justify-content: space-evenly;
 	align-items: center;
-	width: 80%;
+	width: 85%;
 	height: 60%;
 	background: linear-gradient(200deg, white, whitesmoke 50%);
 	border-radius: 3px;
@@ -288,10 +289,14 @@ body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-size: 18px;
+	font-size: 0.55rem;
 }
 
 .main-controls__arrow-pad {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 	position: relative;
 	width: 30%;
 	height: 100%;
@@ -302,53 +307,48 @@ body {
 .arrow-pad__left,
 .arrow-pad__down,
 .arrow-pad__mid {
-	position: absolute;
 	aspect-ratio: 1 / 1;
-	width: 30px;
+	width: 1rem;
 	background-color: #212121;
 	box-shadow: -2px 2px 0px 0px #030303;
+}
+
+.middle-controls__pads {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .arrow-pad__up {
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
-	left: 50%;
-	transform: translate(-50%, 5%);
+	transform: translateY(1px);
 	z-index: 1400;
 }
 
 .arrow-pad__right {
 	border-top-right-radius: 5px;
 	border-bottom-right-radius: 5px;
-	top: 50%;
-	left: 50%;
-	transform: translate(45%, -50%);
+	transform: translateX(-1px);
 	z-index: 1400;
 }
 
 .arrow-pad__down {
 	border-bottom-right-radius: 5px;
 	border-bottom-left-radius: 5px;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, 45%);
+	transform: translateY(-1px);
 	z-index: 1500;
 }
 
 .arrow-pad__left {
 	border-top-left-radius: 5px;
 	border-bottom-left-radius: 5px;
-	top: 50%;
-	left: 50%;
-	transform: translate(-145%, -50%);
+	transform: translateX(1px);
 	z-index: 1500;
 }
 
 .arrow-pad__mid {
 	border-radius: 0;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
 	z-index: 1450;
 	background-color: #212121;
 }
@@ -357,7 +357,7 @@ body {
 .pokedex__center {
 	position: relative;
 	width: 50px;
-	height: 90vh;
+	height: 23.25rem;
 	min-width: 50px;
 	border-radius: 1px;
 	background: linear-gradient(90deg, #8a0009, var(--pokered), #8a0009);
@@ -376,18 +376,18 @@ body {
 }
 
 .center__hinge:first-child {
-	margin-top: 8vh;
+	margin-top: 1.7rem;
 }
 
 .center__hinge:last-child {
-	margin-top: 80vh;
+	margin-top: 17rem;
 }
 
 /* Pokedex Top Right */
 .pokedex__right {
-	width: 400px;
-	height: 90vh;
-	min-width: 400px;
+	width: 14.3rem;
+	height: 23.25rem;
+	min-width: 14.3rem;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -406,9 +406,10 @@ body {
 .right__top-back {
 	position: absolute;
 	background-color: var(--bg-color);
-	width: 100%;
+	width: 101%;
 	height: 60%;
 	z-index: 110;
+	top: -5px;
 }
 
 .right__top-left {
@@ -416,7 +417,7 @@ body {
 	width: 51.4%;
 	height: 50%;
 	background-color: var(--pokered);
-	border-top-right-radius: 40px;
+	border-top-right-radius: 2rem;
 	margin-top: 10%;
 	z-index: 120;
 }
@@ -424,14 +425,15 @@ body {
 .right__top-curve {
 	position: absolute;
 	background-color: var(--bg-color);
-	width: 50%;
+	width: 55%;
 	height: 80%;
-	border-bottom-left-radius: 40px;
-	margin-left: 50%;
+	border-bottom-left-radius: 2rem;
+	margin-left: 49%;
 	z-index: 130;
 }
 
 .extra-screen {
+	font-size: 1.25rem;
 	width: 85%;
 	height: 20%;
 	margin-top: 3%;
@@ -592,7 +594,7 @@ body {
 	border: 2px solid black;
 	outline: 5px solid grey;
 	box-sizing: border-box;
-	font-size: 14px;
+	font-size: 0.55rem;
 	background-color: #f8f8f8;
 }
 
@@ -614,6 +616,7 @@ body {
 }
 
 .left__poke-img {
+	background-image: url("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png");
 	aspect-ratio: 1 / 1;
 	min-width: 96px;
 }
@@ -632,6 +635,7 @@ body {
 }
 
 .up__info {
+	font-size: 0.55rem;
 	display: flex;
 	justify-content: space-between;
 	height: 15%;
@@ -651,10 +655,10 @@ body {
 .mid__square-containers {
 	position: absolute;
 	display: flex;
-	justify-content: space-around;
+	justify-content: space-evenly;
 	width: 45%;
 	height: 10px;
-	top: -50%;
+	top: -45%;
 }
 
 .mid__square-containers:last-child {
@@ -692,6 +696,7 @@ body {
 }
 
 .flavor__letter {
+	font-size: 0.55rem;
 	width: 5%;
 	height: 100%;
 	text-align: center;
@@ -739,6 +744,7 @@ body {
 .stats__top {
 	display: flex;
 	align-items: center;
+	justify-content: space-evenly;
 	width: 100%;
 	height: 40%;
 }
@@ -748,7 +754,6 @@ body {
 	flex-direction: column;
 	align-items: center;
 	width: 35%;
-	height: 100%;
 }
 
 .stats__poke-img {
@@ -757,6 +762,7 @@ body {
 }
 
 .id-container {
+	font-size: 0.55rem;
 	display: flex;
 	align-items: baseline;
 }
@@ -775,7 +781,8 @@ body {
 	justify-content: center;
 	width: 52%;
 	height: 90%;
-	box-shadow: 2px 2px 0px 2px black;
+	border-right: 4px solid black;
+	border-bottom: 4px solid black;
 	margin-left: 15px;
 	padding: 0 5px;
 }
@@ -806,7 +813,7 @@ body {
 
 .stats__hp-container {
 	display: flex;
-	flex-wrap: wrap;
+	flex-wrap: nowrap;
 	align-items: center;
 	justify-content: space-between;
 	width: 100%;
@@ -878,6 +885,8 @@ body {
 /* Pokedex Entry Stats Down */
 .stats__down {
 	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
 	width: 100%;
 	height: 60%;
 }
@@ -976,8 +985,9 @@ body {
 	justify-content: space-around;
 	width: 35%;
 	height: 85%;
-	margin: 16px 0 0 12%;
-	box-shadow: 2px 2px 0 2px black;
+	margin: 0 6px 4px;
+	border-right: 4px solid black;
+	border-bottom: 4px solid black;
 }
 
 .type-box__txt-container {
@@ -1002,4 +1012,10 @@ body {
 /* Utilities */
 .hide {
 	display: none;
+}
+
+@media (min-width: 1024px) {
+	.mid__square-containers {
+		top: 0%;
+	}
 }

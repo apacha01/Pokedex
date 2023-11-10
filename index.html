@@ -14,12 +14,15 @@
 </head>
 
 <body>
-	<audio id="bg-music" autoplay loop>
-		<source src="./sound/route-1-loop-version.mp3" type="audio/mpeg">
+	<audio id="bg-music" loop>
+		<source src="https://raw.githubusercontent.com/apacha01/Pokedex/classes/sound/route-1-loop-version.mp3"
+			type="audio/mpeg">
 		Your browser does not support the audio element.
 	</audio>
 	<h1 class="pokedex__title">Pokédex</h1>
-	<button id="mute-bg-music" class="mute"><i class="fa-solid fa-volume-high"></i></button>
+	<button id="mute-bg-music" class="mute" aria-label="toggle background music">
+		<i class="fa-solid fa-volume-xmark"></i>
+	</button>
 	<div class="pokedex-container">
 		<div class="pokedex__left">
 			<div class="left__top">
@@ -68,10 +71,12 @@
 				</div>
 				<div class="main-controls__arrow-pad">
 					<button id="arrow-pad-up" class="arrow-pad__up"></button>
-					<button id="arrow-pad-right" class="arrow-pad__right"></button>
+					<div class="middle-controls__pads">
+						<button id="arrow-pad-left" class="arrow-pad__left"></button>
+						<div class="arrow-pad__mid"></div>
+						<button id="arrow-pad-right" class="arrow-pad__right"></button>
+					</div>
 					<button id="arrow-pad-down" class="arrow-pad__down"></button>
-					<button id="arrow-pad-left" class="arrow-pad__left"></button>
-					<div class="arrow-pad__mid"></div>
 				</div>
 			</div>
 		</div>

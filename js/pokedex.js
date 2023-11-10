@@ -6,13 +6,31 @@ import PokedataFormatter from './pokedata-formatter.js';
 import PokedexUpdater from './pokedex-updater.js';
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Pokedex Responsiveness
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+document.querySelector(':root').style.fontSize =
+	Math.max(
+		Math.round(window.innerWidth * (window.innerWidth / window.innerHeight) / (50 * (window.innerWidth / window.innerHeight))),
+		24
+	)
+	+ 'px';
+
+window.addEventListener('resize', () => {
+	document.querySelector(':root').style.fontSize =
+		Math.max(
+			Math.round(window.innerWidth * (window.innerWidth / window.innerHeight) / (50 * (window.innerWidth / window.innerHeight))),
+			24
+		)
+		+ 'px';
+});
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Variables
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 let currentPokemon;
 let currentUpdater;
 let isTop = true;
 let isInfo = true;
-let isMuted = false;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Constants
@@ -116,16 +134,12 @@ moveLeftBtn.addEventListener('click', async () => {
  * Toggles the background music sound.
  */
 toggleBgMusic.addEventListener('click', () => {
-	if (!isMuted) {
-		toggleBgMusic.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
-		document.getElementById('bg-music').muted = true;
-		isMuted = true;
-	}
-	else {
-		toggleBgMusic.innerHTML = '<i class="fa-solid fa-volume-high"></i>';
-		document.getElementById('bg-music').muted = false;
-		isMuted = false;
-	}
+	const audio = document.getElementById('bg-music');
+	toggleBgMusic.innerHTML =
+		audio.muted
+			? '<i class="fa-solid fa-volume-xmark"></i>'
+			: '<i class="fa-solid fa-volume-high"></i>';
+	audio.muted = !audio.muted;
 });
 
 /**
@@ -136,8 +150,8 @@ toggleBgMusic.addEventListener('click', () => {
 async function changePokemonEntry(poke) {
 	let dotsInterv = startLoadingText();
 	let data = await requestPokemonData(poke)
-				.then((res) => {clearInterval(dotsInterv); return res;})
-				.catch((err) => {loadingTxt.innerText = 'Error'; console.log(err);});
+		.then((res) => { clearInterval(dotsInterv); return res; })
+		.catch((err) => { loadingTxt.innerText = 'Error'; console.log(err); });
 
 	if (!isDataValid(data)) {
 		return;
@@ -157,10 +171,10 @@ async function changePokemonEntry(poke) {
  */
 async function requestPokemonData(pokeName) {
 	let pokemon = await fetch(url(pokeName)).then((res) => {
-		if (res.ok)	return res.json();
+		if (res.ok) return res.json();
 		else {
 			// print error in some of the small displays
-			
+
 			return null;
 		}
 	});
@@ -180,7 +194,7 @@ async function requestPokemonData(pokeName) {
 function startLoadingText() {
 	loadingTxt.innerText = 'Loading';
 	let dotsInterv = setInterval(() => {
-		if(loadingTxt.innerText.length === 13) loadingTxt.innerText = 'Loading';
+		if (loadingTxt.innerText.length === 13) loadingTxt.innerText = 'Loading';
 		loadingTxt.innerText += ' .';
 	}, 250);
 
