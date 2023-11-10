@@ -19,6 +19,25 @@
  * 	total
  */
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Pokedex Responsiveness
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+document.querySelector(':root').style.fontSize =
+	Math.max(
+		Math.round(window.innerWidth * (window.innerWidth / window.innerHeight) / (50 * (window.innerWidth / window.innerHeight))),
+		24
+	)
+	+ 'px';
+
+window.addEventListener('resize', () => {
+	document.querySelector(':root').style.fontSize =
+		Math.max(
+			Math.round(window.innerWidth * (window.innerWidth / window.innerHeight) / (50 * (window.innerWidth / window.innerHeight))),
+			24
+		)
+		+ 'px';
+});
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Variables
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 let currentPokemonName = '';
@@ -64,7 +83,6 @@ const ATK_INDEX = 1;
 const DEF_INDEX = 2;
 const SPD_INDEX = 5;
 const SPC_INDEX = 3;
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Code
@@ -125,14 +143,14 @@ moveLeftBtn.addEventListener('click', async () => {
 async function changePokemonEntry(poke) {
 	loadingTxt.innerText = 'Loading';
 	let dotsInterv = setInterval(() => {
-		if(loadingTxt.innerText.length === 13) loadingTxt.innerText = 'Loading';
+		if (loadingTxt.innerText.length === 13) loadingTxt.innerText = 'Loading';
 		loadingTxt.innerText += ' .';
 	}, 250);
 
 	let data = await getPokemonData(poke)
-				.then((res) => {clearInterval(dotsInterv); return res;})
-				.catch((err) => {loadingTxt.innerText = 'Error'; console.log(err);});
-	
+		.then((res) => { clearInterval(dotsInterv); return res; })
+		.catch((err) => { loadingTxt.innerText = 'Error'; console.log(err); });
+
 	if (data === null) {
 		loadingTxt.innerText = 'Not Found';
 		return;
@@ -152,10 +170,10 @@ async function changePokemonEntry(poke) {
 
 async function getPokemonData(pokeName) {
 	let pokemon = await fetch(url(pokeName)).then((res) => {
-		if (res.ok)	return res.json();
+		if (res.ok) return res.json();
 		else {
 			// print error in some of the small displays
-			
+
 			return null;
 		}
 	});
@@ -165,7 +183,7 @@ async function getPokemonData(pokeName) {
 
 	let processedData = processData(pokemon, species);
 	let processedStats = processStats(pokemon);
-	
+
 	return [processedData, processedStats];
 }
 
@@ -183,7 +201,7 @@ function processData(pokemonObject, species) {
 	}
 }
 
-function processTypes(types){
+function processTypes(types) {
 	let processedTypes = []
 	types.forEach(t => {
 		processedTypes.push(t.type.name);
@@ -191,20 +209,20 @@ function processTypes(types){
 	return processedTypes;
 }
 
-function processSpecies(species){
+function processSpecies(species) {
 	let s = species.genera.find((s) => s.language.name === 'en');
 	return s.genus;
 }
 
-function processAbilities(abilities){
+function processAbilities(abilities) {
 	let abs = [];
 	abilities.forEach((a) => {
-		abs.push({ability: a.ability.name, isHidden: a.is_hidden});
+		abs.push({ ability: a.ability.name, isHidden: a.is_hidden });
 	});
 	return abs;
 }
 
-function processStats(pokemonObject){
+function processStats(pokemonObject) {
 	let stats = [];
 	pokemonObject.stats.forEach((s) => {
 		stats.push([s.base_stat, s.stat.name]);
@@ -242,12 +260,6 @@ function updatePokedexEntry(data) {
 	// every weight is X.0 lb so i'll do it like that
 	pokeWeight.innerText = formatWeight(pokemon.weight);
 
-	if (pokeName.innerText.length >= 11) pokeName.style.fontSize = '12px';
-	else pokeName.style.fontSize = '14px';
-
-	if (pokeSpecies.innerText.length >= 11)	pokeSpecies.style.fontSize = '12px';
-	else pokeSpecies.style.fontSize = '14px';
-
 	updateFlavor(pokemon.flavor);
 	updateLines(currentPokemonFlavor, true);
 
@@ -277,10 +289,10 @@ function formatId(id) {
 	else if (id < 100)
 		fid += '0';
 
-	return fid + id; 
+	return fid + id;
 }
 
-function formatHeight (decimiters) {
+function formatHeight(decimiters) {
 	let absolute = Math.round((decimiters * 10) / 2.54);
 	let foot = Math.floor(absolute / 12);
 	let inches = absolute - (foot * 12);
@@ -291,7 +303,7 @@ function formatHeight (decimiters) {
 	return height;
 }
 
-function formatWeight (hectograms) {
+function formatWeight(hectograms) {
 	let weight = Math.ceil(hectograms * 0.22046);
 	return `${weight}.0 lb`;
 }
@@ -318,7 +330,7 @@ function updateLines(flavor, top) {
 	}
 }
 
-function changePokedexEntry(toStats){
+function changePokedexEntry(toStats) {
 	if (toStats) {
 		document.getElementById('info-container').style.display = 'none';
 		document.getElementById('stats-container').style.display = 'block';
